@@ -1,0 +1,15 @@
+{
+  "name": "bridgr",
+  "description": "Bridgr, by Eastridge Analytics: ask your company's data from your assistant, read-only, signed in as you.",
+  "owner": {
+    "name": "Eastridge Analytics",
+    "url": "https://www.bridgr-platform.com"
+  },
+  "plugins": [
+    {
+      "name": "bridgr",
+      "source": "./plugins/bridgr",
+      "description": "Connects your assistant to your own company's Bridgr, read-only, signed in as you."
+    }
+  ]
+}

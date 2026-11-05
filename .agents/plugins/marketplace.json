@@ -1,0 +1,20 @@
+{
+  "name": "bridgr",
+  "interface": {
+    "displayName": "Bridgr"
+  },
+  "plugins": [
+    {
+      "name": "bridgr",
+      "source": {
+        "source": "local",
+        "path": "./plugins/bridgr"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

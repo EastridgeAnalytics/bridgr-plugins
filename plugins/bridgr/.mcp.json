@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bridgr": {
+      "type": "http",
+      "url": "${user_config.bridgr_url}/mcp"
+    }
+  }
+}

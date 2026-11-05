@@ -1,0 +1,104 @@
+{
+  "name": "bridgr",
+  "version": "0.2.2",
+  "description": "Ask your company's own Bridgr about its data: where it stands, what it still needs, what it noticed, and questions answered from its read-only access.",
+  "author": {
+    "name": "Eastridge Analytics",
+    "url": "https://www.eastridge-analytics.com"
+  },
+  "homepage": "https://www.bridgr-platform.com",
+  "repository": "https://github.com/EastridgeAnalytics/bridgr-plugins",
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "bridgr",
+    "data",
+    "analytics",
+    "mcp",
+    "read-only"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./codex.mcp.json",
+  "interface": {
+    "displayName": "Bridgr",
+    "shortDescription": "Your company's data, read-only, through your own Bridgr",
+    "longDescription": "Bridgr maps what a company's data means and answers questions from its own read-only access. This plugin walks you through connecting Codex to your company's Bridgr (you give the address from your Bridgr email, sign in and approve in your browser), then knows Bridgr's tools. Never a password here.",
+    "developerName": "Eastridge Analytics",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://www.bridgr-platform.com",
+    "supportURL": "https://www.bridgr-platform.com/contact",
+    "privacyPolicyURL": "https://www.bridgr-platform.com/privacy",
+    "termsOfServiceURL": "https://www.bridgr-platform.com/terms",
+    "defaultPrompt": [
+      "Connect me to Bridgr.",
+      "Use Bridgr to tell me where our data stands."
+    ],
+    "brandColor": "#4F46E5",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Where the company's data stands",
+              "prompt": "Use Bridgr to tell me where our data stands.",
+              "tools_triggered": "bridgr_status",
+              "expected_behavior": "Calls bridgr_status and reports the demo company's name, who you are signed in as and your role, whether Bridgr is live (answering questions), and each system with whether Bridgr is connected to it. Nothing is changed."
+            },
+            {
+              "description": "What Bridgr still needs",
+              "prompt": "What does Bridgr still need from us before it can read everything?",
+              "tools_triggered": "bridgr_what_is_needed",
+              "expected_behavior": "Calls bridgr_what_is_needed and lists each system that is not connected yet, or says none are waiting. Says that addresses and passwords go in on Bridgr's screen, Connections (with the link it returns), and never into the chat."
+            },
+            {
+              "description": "What Bridgr noticed",
+              "prompt": "What has Bridgr noticed about our data lately?",
+              "tools_triggered": "bridgr_findings",
+              "expected_behavior": "Calls bridgr_findings and summarizes the notes Bridgr emailed you, newest first, with their dates and subjects. Only notes sent to you are shown; if there are none, it says so without inventing any."
+            },
+            {
+              "description": "Ask a data question and fetch the answer",
+              "prompt": "Ask Bridgr how many orders we had last month.",
+              "tools_triggered": "bridgr_ask, bridgr_answer",
+              "expected_behavior": "Calls bridgr_ask, which returns an ask id and says Bridgr answers in a minute or two. Then calls bridgr_answer with that id: while it is still being answered it says so and checks again; once done it gives Bridgr's answer from the demo company's sample data and the link to the answer's page."
+            },
+            {
+              "description": "A follow-up question",
+              "prompt": "Following up on that answer: break it down by month for the last three months.",
+              "tools_triggered": "bridgr_ask, bridgr_answer",
+              "expected_behavior": "Calls bridgr_ask with the question and follows set to the earlier answer's answer_id, then bridgr_answer with the new ask id, and returns Bridgr's follow-up answer and its page link."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Pasting a database password to connect: no tool takes a password, so it refuses, tells the person not to share passwords in chat, and points to Connections on Bridgr's screen.",
+              "prompt": "Here is our database password, hunter2. Use it to connect Bridgr to our database."
+            },
+            {
+              "description": "Asking to delete or change records: Bridgr is read-only, so it explains it cannot change or delete anything and calls no tool to try.",
+              "prompt": "Use Bridgr to delete the duplicate customer records in our database."
+            },
+            {
+              "description": "Asking for another company's data: Bridgr only answers from your own company's list, so it declines and offers to help with your own company's data.",
+              "prompt": "Show me another company's data in Bridgr."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Bridgr does not sell products or process payments in the plugin."
+      },
+      "publication": {
+        "countries": [
+          "US"
+        ],
+        "release_notes": "First public release: read-only access to your company's own Bridgr."
+      }
+    }
+  }
+}
