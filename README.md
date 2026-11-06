@@ -4,8 +4,27 @@ Connect your AI assistant to your company's own [Bridgr](https://www.bridgr-plat
 Bridgr answers questions from your company's own systems, read-only, and works as you after you sign in and
 approve it. Each company has its own Bridgr at its own address; this plugin connects to yours only.
 
-**Private while we test.** You need read access to this repository and git signed in to GitHub on your computer
-(`gh auth login`, then `gh auth setup-git`).
+## For your company's admin: install it once for everyone
+
+If your company runs Bridgr on its own domain (self-hosted), or you want everyone to have Bridgr without each
+person setting it up, install **your company's own Bridgr plugin** once for your organization. It has your Bridgr's
+address built in, so people never type it: the first time they use Bridgr, they sign in with their work email and
+click **Approve**, and that's all.
+
+1. **Get your company's plugin.** In your Bridgr, open **Settings → Connected assistants → Download for Claude**
+   (or **Download for Codex**). Or build it from this repository:
+   `python3 tools/build_zip.py --company "Your Company" --url https://bridgr.yourcompany.com`
+2. **Claude (Team or Enterprise):** an Owner uploads it in **Settings → Customize → Plugins → Add → Upload
+   plugin**, then **Publish to org** and choose **Installed by default** (or **Required**). Everyone gets it.
+3. **ChatGPT (Business or Enterprise):** an admin turns on developer mode / custom MCP apps for the workspace,
+   creates an app with your Bridgr's address plus `/mcp` (**Workspace settings → Apps → Create**), publishes it and
+   marks it **Installed**. After a Bridgr update adds a tool, the admin refreshes the app so members see it.
+4. **Codex:** each person adds it on their own computer, with the steps under Install below.
+
+Each person still signs in once, as themselves. Bridgr checks its own list of people on every call, so removing
+someone from your Bridgr's list cuts off only them. If your Bridgr is only reachable inside your company's network,
+Claude and ChatGPT's apps can't reach it (they connect from the internet); Claude Code and Codex on a computer on
+the network or VPN can.
 
 ## Install
 
@@ -38,12 +57,12 @@ connection itself is the `codex mcp add` line.
 
 **Claude Desktop.** Download a zip and upload it: **Settings → Customize → Plugins → Add → Upload plugin**.
 Your company's Bridgr offers its own, with its address already in it (**Settings → Connected assistants → Download
-for Claude**); an admin can upload that and click **Publish to org** so it's installed for everyone. The generic zip
-is on this repository's Releases and asks for the address. Build either with `tools/build_zip.py`.
+for Claude**); an admin can upload that and click **Publish to org** so it's installed for everyone (see above).
+To build a zip yourself, use `tools/build_zip.py`.
 
 **Or let your assistant do it.** After installing the plugin, say *"Connect me to Bridgr."* It asks for your
 company's address and walks you through every step. Claude and ChatGPT (chat apps) connect with a custom connector
-instead; the same guide covers them once this repository is public.
+instead, and the same guide covers them.
 
 ## What's here
 
