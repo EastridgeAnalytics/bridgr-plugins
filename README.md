@@ -4,6 +4,15 @@ Connect your AI assistant to your company's own [Bridgr](https://www.bridgr-plat
 Bridgr answers questions from your company's own systems, read-only, and works as you after you sign in and
 approve it. Each company has its own Bridgr at its own address; this plugin connects to yours only.
 
+## Run Bridgr on your own server (self-hosted)
+
+Paste this into Claude Code, Codex or any AI assistant that can run commands on your server:
+
+    Install Bridgr for my company. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/install.md
+
+[install.md](install.md) takes it from picking a server (size, where to host) through buying, the licence email,
+starting Bridgr, the first sign-in, adding data, connecting your team, updating and cancelling.
+
 ## For your company's admin: install it once for everyone
 
 If your company runs Bridgr on its own domain (self-hosted), or you want everyone to have Bridgr without each
@@ -68,6 +77,8 @@ instead, and the same guide covers them.
 
 | Path | What it is |
 |---|---|
+| `setup.md` | the guide an assistant follows to connect a person to their company's Bridgr |
+| `install.md` | the guide an assistant follows to install a self-hosted Bridgr for a company |
 | `.claude-plugin/marketplace.json` | the marketplace Claude Code adds |
 | `.agents/plugins/marketplace.json` | the marketplace Codex adds |
 | `plugins/bridgr/` | the plugin for both: Claude's and Codex's manifests, the connector (Claude), two skills |
