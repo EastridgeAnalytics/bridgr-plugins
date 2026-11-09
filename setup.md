@@ -19,6 +19,73 @@ Bridgr tool call succeeds. These instructions are published at
 - If you can't run commands (a chat app), give one step at a time and wait for "done" before the next.
 - Don't connect company systems (databases, files). That happens on Bridgr's own screen, under **Connections**.
 
+## No assistant yet?
+
+If the person already uses an assistant, skip this section. Otherwise ask which kind they want:
+
+- **Claude Desktop** or **ChatGPT desktop** for a chat app without terminal commands. Pick the one their company
+  already uses, if there is one.
+- **Claude Code** or **Codex CLI** for an assistant that can run commands on their computer, including Linux or a
+  server. Pick the one they already have an account for, if there is one.
+
+Ask which operating system they use if you can't tell. Don't buy a plan or create an account for them. They sign
+in themselves. Never ask them to paste a password, token or sign-in code into chat.
+
+### A desktop chat app
+
+Give one step at a time and wait for "done" after each, even if you can run commands:
+
+1. Claude Desktop (Mac or Windows): download their version from https://claude.ai/download.
+   ChatGPT desktop (Mac or Windows): download from https://chatgpt.com/download/ and follow the official store
+   link if offered.
+2. Follow the installer or store prompts to finish installing the app.
+3. Open the app and sign in with their own account.
+4. Start a chat there and paste: "Connect me to Bridgr. Fetch and follow
+   https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md".
+
+Wait for "done" before the next step. Don't claim it is installed, signed in or connected without confirmation.
+The new chat starts at step 1 below, skipping this section.
+
+Claude Desktop is not a headless server app. Anthropic now offers a Linux desktop beta for Ubuntu and Debian,
+so the old advice that there is no Linux version is out of date. For a Linux desktop, follow Anthropic's current
+installation page below. For a server without a desktop, use Claude Code or Codex CLI instead.
+
+### A command-line assistant
+
+If you can run commands on the person's own computer, install their choice yourself. Don't install on a remote
+machine unless that's where they want to use it. If you can't run commands, give one at a time and wait for
+"done". First check whether `claude --version` or `codex --version` already works.
+
+**Claude Code:** on macOS, Linux or WSL:
+
+    curl -fsSL https://claude.ai/install.sh | bash
+
+On Windows in PowerShell:
+
+    irm https://claude.ai/install.ps1 | iex
+
+Open a new terminal, then check `claude --version`. Have the person start `claude` and finish its sign-in themselves.
+
+**Codex CLI:** on macOS or Linux:
+
+    curl -fsSL https://chatgpt.com/codex/install.sh | sh
+
+For Windows or another method, follow OpenAI's CLI installation page below rather than guessing a command.
+Then check `codex --version`. Have the person start `codex` and choose **Sign in with ChatGPT** themselves.
+
+Once installed and signed in, get and check the company address (step 1) and check for an existing connection
+(step 2), then continue with **step 3, Connect, for the assistant you are**. If moving to a new assistant session,
+paste the setup request above into it so the guide isn't lost. Installing an assistant alone does not connect Bridgr.
+
+Official instructions checked November 9, 2026. Re-check these if an installer or requirement changes:
+
+- Claude Desktop: https://support.claude.com/en/articles/10065433-install-claude-desktop
+- Claude Code: https://code.claude.com/docs/en/setup
+- ChatGPT desktop: https://chatgpt.com/download/
+- ChatGPT Mac: https://help.openai.com/en/articles/9275200-downloading-the-chatgpt-macos-app
+- ChatGPT Windows: https://help.openai.com/en/articles/9982051-using-the-chatgpt-windows-app
+- Codex CLI: https://developers.openai.com/codex/cli
+
 ## 1. The address
 
 If the person gave an address with their request, use it. Otherwise ask, in these words:

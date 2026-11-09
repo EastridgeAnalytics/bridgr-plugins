@@ -20,6 +20,21 @@ address. You connect this assistant to **the person's company's Bridgr only**, t
 - Don't add a second Bridgr if one is already connected. Don't connect company systems: that's done on Bridgr's own
   screen, under Connections.
 
+## No assistant yet?
+
+If they don't have an assistant, help them choose and install one before connecting Bridgr. Follow the
+**No assistant yet?** section in https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md. It has the
+current official download links for Claude Desktop and ChatGPT desktop, and install commands for Claude Code
+and Codex CLI. Pick a chat app for no terminal commands, or a CLI to run commands locally, on Linux or on a server.
+Run CLI install commands yourself if you can, on the person's chosen computer only. For desktop downloads and
+sign-in, give one step at a time and wait for "done". Never handle passwords, tokens, codes or approval.
+
+Claude Desktop is not a headless server app. Anthropic now offers a Linux desktop beta, so the old advice that
+there is no Linux version is out of date. Use the official instructions linked in the public setup guide.
+After installation and the person's own sign-in, use steps 1 and 2 of that guide, then step 3 to connect the
+chosen assistant. In this skill's existing flow, continue at step 0 below instead. Installation alone is not a
+successful Bridgr connection.
+
 ## 0. Already set up?
 
 If you have the `bridgr_status` tool, call it. If it answers, Bridgr is connected: skip to step 4. If it says to sign
