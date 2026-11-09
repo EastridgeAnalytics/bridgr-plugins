@@ -38,7 +38,7 @@ Give one step at a time and wait for "done" after each, even if you can run comm
 1. Claude Desktop (Mac or Windows): download their version from https://claude.ai/download.
    ChatGPT desktop (Mac or Windows): download from https://chatgpt.com/download/ and follow the official store
    link if offered.
-2. Open the downloaded installer and finish installing the app.
+2. Follow the installer or store prompts to finish installing the app.
 3. Open the app and sign in with their own account.
 4. Start a chat there and paste: "Connect me to Bridgr. Fetch and follow
    https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md".
@@ -64,7 +64,7 @@ On Windows in PowerShell:
 
     irm https://claude.ai/install.ps1 | iex
 
-Then check `claude --version`. Have the person start `claude` and finish its sign-in themselves.
+Open a new terminal, then check `claude --version`. Have the person start `claude` and finish its sign-in themselves.
 
 **Codex CLI:** on macOS or Linux:
 
