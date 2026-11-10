@@ -3,7 +3,7 @@
 - **Update:** change the version in the `image:` line of `compose.yaml`, then
   `docker compose pull && docker compose up -d`. Data stays in the `bridgr-data` volume. Updates need an active
   subscription: the registry checks the licence key on every pull. On a new server, or after Docker is reset, run the
-  registry sign-in again ([install.md](../install.md), step 3).
+  registry sign-in again ([install.md](../install.md), step 4).
 - **Start at boot:** the container restarts by itself (`restart: unless-stopped`). Make sure Docker starts at boot:
   `sudo systemctl enable docker`.
 - **Back up:** the `bridgr-data` Docker volume holds everything Bridgr keeps.

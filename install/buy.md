@@ -39,4 +39,4 @@ Within a minute the owner gets **Your Bridgr licence key** from `info@eastridge-
 attached: `compose.yaml` and `seccomp-bwrap.json`. Nothing arrived? Check spam, then reply to the address on the
 checkout receipt.
 
-Then go back to [install.md](../install.md), "Four steps".
+Then go back to [install.md](../install.md), "Five steps".

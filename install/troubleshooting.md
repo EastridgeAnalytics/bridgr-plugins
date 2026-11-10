@@ -5,7 +5,10 @@ in `docker compose logs bridgr`.
 
 | What you saw | What to do |
 |---|---|
-| `unauthorized` or `no basic auth credentials` from `docker compose up` or `pull` | Run the registry sign-in again ([install.md](../install.md), step 3), then start again. |
+| `docker: command not found`, or `docker compose` isn't a command | Docker isn't installed: see step 1 in [install.md](../install.md). On Mac or Windows the person installs Docker Desktop and opens it once. |
+| The download takes more than 10 minutes | Bridgr is about 600 MB. Let it finish; if it stopped, run the same start command again and it carries on where it left off. |
+| "Email me a link" on a trial on this computer sends nothing | A trial doesn't need it: reload `http://localhost:8080`. If it still asks, run `docker compose run --rm bridgr signin` and open the link it prints. |
+| `unauthorized` or `no basic auth credentials` from `docker compose up` or `pull` | Run the registry sign-in again ([install.md](../install.md), step 4), then start again. |
 | `denied: This Bridgr licence is canceled` (or another status) on pull | The subscription isn't active. The owner renews with the link in the licence email; the same key works again. |
 | `That licence key isn't one of ours` on sign-in | Use the `compose.yaml` from the licence email unchanged. |
 | `licence: paused (missing)` | The licence key isn't in `compose.yaml`. Use the file from the licence email as is. |
