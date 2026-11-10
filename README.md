@@ -2,16 +2,29 @@
 
 Connect your AI assistant to your company's own [Bridgr](https://www.bridgr-platform.com), by Eastridge Analytics.
 Bridgr answers questions from your company's own systems, read-only, and works as you after you sign in and
-approve it. Each company has its own Bridgr at its own address; this plugin connects to yours only.
+approve it.
 
-## Run Bridgr on your own server (self-hosted)
+## Start here: which one are you?
 
-Paste this into Claude Code, Codex or any AI assistant that can run commands on your server:
+**Setting up Bridgr for your company** (you bought it, or want to). Paste this into Claude Code, Codex or any AI
+assistant that can run commands on your server:
 
     Install Bridgr for my company. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/install.md
 
-[install.md](install.md) takes it from picking a server (size, where to host) through buying, the licence email,
-starting Bridgr, the first sign-in, adding data, connecting your team, updating and cancelling.
+**Your company already has Bridgr, and you want it in your assistant.** Paste this into Claude, ChatGPT, Claude
+Code, Codex, Cursor or any MCP client:
+
+    Connect me to Bridgr. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md
+
+Everything below is detail for admins and for doing it by hand.
+
+## Run Bridgr on your own server (self-hosted)
+
+[install.md](install.md) is a short page an assistant follows. It opens one more page from [install/](install/)
+only when it needs it: [buying](install/buy.md), [a server behind HTTPS](install/proxy.md),
+[a trial on one computer](install/local-trial.md), [a web address](install/web-address.md),
+[every terminal command](install/terminal.md), [the team](install/team.md), [updates and cancelling](install/run-it.md),
+[fixing problems](install/troubleshooting.md), and [installing by hand](install/by-hand.md).
 
 ## For your company's admin: install it once for everyone
 
