@@ -11,8 +11,8 @@ Start Bridgr alone, without the HTTPS service, instead of step 5 in [install.md]
 mkdir -p files/uploads && docker compose up -d bridgr
 ```
 
-Then the person opens `http://localhost:8080` in a browser on this computer. It opens already signed in, with no
-email needed: only this computer can reach a trial. On a server reached over SSH, the person first runs this on their
+Then give the person the one-time link from `docker compose run --rm bridgr signin` ([install.md](../install.md),
+"Then give the person one link"). It opens `http://localhost:8080` signed in. No email is needed on a trial. On a server reached over SSH, the person first runs this on their
 own computer: `ssh -L 8080:localhost:8080 <server>`.
 
 The logs say `address: local trial at http://localhost:8080`, and the owner sees a reminder on the screen. Claude

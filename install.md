@@ -57,11 +57,14 @@ Every page here sits next to this one: replace `install.md` in this page's addre
 
 ## Then give the person one link
 
-When Bridgr is running, give the person one link to open in their browser:
+When Bridgr is running, run this and give the person the one-time link it prints, privately (not in a team chat):
 
-- **This computer:** `http://localhost:8080`. It opens already signed in.
-- **A server:** run `docker compose run --rm bridgr signin` and give the person the one-time link it prints,
-  privately (not in a team chat). Opening it signs them in.
+```sh
+docker compose run --rm bridgr signin
+```
+
+Say: "Open this link to finish setting up Bridgr. It works once." Opening it signs them in, on this computer or a
+server alike. The link is a sign-in, so don't keep it or repeat it after they've opened it.
 
 From there Bridgr walks them through three screens: accept the licence terms, paste their AI key, add their data.
 
