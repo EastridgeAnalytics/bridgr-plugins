@@ -48,8 +48,14 @@ your company's domain. Your data never leaves that server except as answers to y
    - **AI key:** the person types it on Bridgr's screen or at the hidden prompt from
      `docker compose run --rm bridgr setup key`. Never ask them to paste it to the agent.
    - **First sign-in and terms:** get the first sign-in link from `docker compose logs bridgr` and give it only
-     to the owner to open in their browser. The owner reads and accepts the licence terms, not the agent.
-   - **Data choice:** the owner chooses the files or read-only database connection Bridgr should use.
+     to the owner to open in their browser. The owner reads and accepts the licence terms, not the agent. A
+     developer owner who prefers the terminal can read them with `docker compose run --rm bridgr terms show` and
+     accept them with `docker compose run --rm bridgr setup terms --by <their email> --yes`, typed by them.
+   - **Data choice:** the owner chooses the files or read-only database connection Bridgr should use. For files on
+     the server, copy them into `files/` beside `compose.yaml` and run `docker compose run --rm bridgr data add /files`.
+
+   After these three, Bridgr works for the owner. The mailbox and team steps come next with `person` true: relay
+   `say_to_person`. The owner may set them up on the screen or leave them for later; either way your part is done.
 
 The JSON is `onboard.checklist(project)` plus these top-level fields:
 
@@ -64,6 +70,28 @@ The JSON is `onboard.checklist(project)` plus these top-level fields:
 Exit codes: **0** all done, **2** more to do, **1** error. Exit 2 is normal in the loop, not a failed install.
 On an error, fix the reported problem before continuing. `docker compose run --rm bridgr status` shows the
 checklist in plain words. People can use the manual path below at any time.
+
+## Everything from the terminal
+
+Every setting on Bridgr's screen has a terminal command too. Run them on the server, in the folder with
+`compose.yaml`, as `docker compose run --rm bridgr <command>`. `bridgr --help` lists them. Secrets (the AI key,
+a database password, a mailbox app password) are typed at a hidden prompt or read with `--password-file` /
+`--secret-file`; they are never command arguments, and an agent must let the person type them.
+
+| Screen | Terminal |
+|---|---|
+| Licence terms | `terms show`, then `setup terms --by <owner email> --yes` (the owner, after reading them) |
+| Settings, AI key | `setup key` |
+| Settings, Address | `setup domain [name] [--check]` |
+| Settings, Folders | `data list`, `data add /files`, `data look NAME`, `data remove NAME` |
+| Settings, Connections | `database list`, `database add NAME --kind postgres --host H --database D --account A`, `database password NAME` |
+| Settings, Mailbox | `mailbox status`, `mailbox add --provider gmail --address bridgr@yourcompany.com`, `mailbox skip`, `mailbox remove` |
+| Settings, People | `people list`, `people add colleague@yourcompany.com --name "Their Name"`, `people remove EMAIL` |
+| The checklist | `status`, or `status --json` for an agent |
+| Ask a question | `ask "<question>"` |
+
+`files/` beside `compose.yaml` is `/files` inside Bridgr. Without a mailbox, `people add` prints a one-time
+sign-in link for the owner to send privately.
 
 ## Manual path
 
@@ -196,10 +224,12 @@ until the owner has signed in. The owner is now signed in to Bridgr's screen.
   folder to the map. This works without a mailbox and without enabling database credential setup.
   Before the first `docker compose up -d`, run `mkdir -p files/uploads` to prepare the nested mountpoint.
 - **Files already on the server:** put them in the `files` folder beside `compose.yaml` on the server (it is mounted into
-  Bridgr read-only as `/files`), then on Bridgr's screen open **Settings → Folders** and add `/files`. Bridgr maps
+  Bridgr read-only as `/files`), then run `docker compose run --rm bridgr data add /files` (or, on Bridgr's screen,
+  open **Settings → Folders** and add `/files`). Bridgr maps
   what's there; the screen shows it as **on the map** when ready. Leave `files/uploads` in place as the mountpoint
   for the separate writable uploads volume. The rest of `files` stays read-only.
-- **Databases:** on Bridgr's screen, **Settings → Connections**. Bridgr reads with a read-only account you create
+- **Databases:** on Bridgr's screen, **Settings → Connections**, or `docker compose run --rm bridgr database add ...`.
+  Bridgr reads with a read-only account you create
   for it. Database connections are switched on by the line `BRIDGR_CREDENTIALS_ENABLED` in `compose.yaml`.
 
 Then ask a question on the screen to check it answers.
