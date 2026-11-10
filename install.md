@@ -41,7 +41,8 @@ your company's domain. Your data never leaves that server except as answers to y
    ```
 
 4. Run `docker compose run --rm bridgr status --json`. If `next` is `done`, stop. If `person` is true,
-   relay `say_to_person` to the owner and wait. Otherwise run the exact command in `run`. Repeat status after
+   relay `say_to_person` to the owner and wait. If `wait_seconds` is above 0, Bridgr is working by itself: wait
+   that long and check again. Otherwise run the exact command in `run`. Repeat status after
    each step. Do not guess a command from a step's `action` or open a screen in place of `run`.
 5. The three owner stops are:
    - **AI key:** the person types it on Bridgr's screen or at the hidden prompt from
@@ -58,6 +59,7 @@ The JSON is `onboard.checklist(project)` plus these top-level fields:
 | `person` | `true` when the next step needs the human. |
 | `say_to_person` | One plain sentence to relay when `person` is true, `""` otherwise. |
 | `run` | The exact command to run next when `person` is false, `""` otherwise. |
+| `wait_seconds` | Above 0 when Bridgr is working by itself (for example mapping uploaded data): wait that long, then check status again. Nothing to run and nothing to ask. |
 
 Exit codes: **0** all done, **2** more to do, **1** error. Exit 2 is normal in the loop, not a failed install.
 On an error, fix the reported problem before continuing. `docker compose run --rm bridgr status` shows the
