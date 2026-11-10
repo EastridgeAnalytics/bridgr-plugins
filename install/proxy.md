@@ -1,7 +1,7 @@
 # The server already has HTTPS in front of it
 
 For a load balancer, an ingress, a reverse proxy, or a host that serves HTTPS for its servers. Do this before the
-first `docker compose up -d`, then go back to [install.md](../install.md), step 3.
+first `docker compose up -d`, then go back to [install.md](../install.md), step 4.
 
 ## 1. Ask the person two things
 

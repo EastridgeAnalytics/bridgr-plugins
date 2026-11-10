@@ -4,14 +4,16 @@ Connect your AI assistant to your company's own [Bridgr](https://www.bridgr-plat
 Bridgr answers questions from your company's own systems, read-only, and works as you after you sign in and
 approve it.
 
-## Start here: which one are you?
+## Start here: is Bridgr already running for your company?
 
-**Setting up Bridgr for your company** (you bought it, or want to). Paste this into Claude Code, Codex or any AI
+**No, I'm setting up our own Bridgr** (you bought it, or want to). It runs on your own computer to try it, or on a
+server your team can reach at an address on your own domain, like `bridgr.yourcompany.com`. Paste this into Claude Code, Codex or any AI
 assistant that can run commands on your server:
 
     Install Bridgr for my company. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/install.md
 
-**Your company already has Bridgr, and you want it in your assistant.** Paste this into Claude, ChatGPT, Claude
+**Yes, our company already has Bridgr, and I want it in my assistant.** You need its address, like
+`https://bridgr.yourcompany.com`; ask whoever set it up. Paste this into Claude, ChatGPT, Claude
 Code, Codex, Cursor or any MCP client:
 
     Connect me to Bridgr. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md
