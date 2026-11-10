@@ -10,7 +10,10 @@ Every page here sits next to this one: replace `install.md` in this page's addre
 - Never ask for, accept, show or repeat a password, API key, licence key, token or sign-in link in the chat.
   Secrets are typed by the person at a hidden prompt.
 - Stop for the owner only when Bridgr says so (`person` is true below). Do everything else yourself.
-- Tell the person what you did and what you saw at each step.
+- Tell the person what you did and what you saw at each step, in plain words. The person may not be technical.
+  Say what it means for them, not how it works: "Bridgr is downloading, about 10 minutes", not "pulling
+  layers from the registry". Don't use words like registry, image, compose, port, tag or CNAME unless they
+  asked. Keep each update to one or two short sentences, and say when they need to do something.
 
 ## Start: one question
 
@@ -22,8 +25,11 @@ Ask the person: **"Do you have the Bridgr licence email (subject: Your Bridgr li
 ## Four steps
 
 1. **Files.** From the email, save `compose.yaml` and `seccomp-bwrap.json` together in one folder on the server.
-2. **Address.** Read the line starting `address: &address` in `compose.yaml` to the person and ask: "Is this where
-   your team should reach Bridgr?" If not, edit that line now. Then pick the one page that fits:
+2. **Address.** This is the web address people will type to open Bridgr, like `https://bridgr.yourcompany.com`.
+   Read the line starting `address: &address` in `compose.yaml` and ask the person in plain words, for example:
+   "Bridgr will live at https://bridgr.yourcompany.com. Is that where your team should open it? If you just
+   want to try it on this computer first, I can set it up so only this computer can open it." If they want
+   something else, edit that line now. Then pick the one page that fits:
    - The server already has HTTPS in front of it (a load balancer, ingress, or a host that serves HTTPS):
      [install/proxy.md](install/proxy.md).
    - The address is `http://localhost:8080` (a trial on this computer): [install/local-trial.md](install/local-trial.md).
