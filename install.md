@@ -78,9 +78,9 @@ docker compose run --rm bridgr status --json
 
 | If | Do |
 |---|---|
-| `person` is true | Say `say_to_person` to the owner, word for word. Wait for them to say "done". |
+| `person` is true | If `run` is not empty, run it first and give the owner what it prints privately (a one-time sign-in link). Then say `say_to_person` word for word, and wait for them to say "done". |
 | `wait_seconds` is above 0 | Bridgr is working by itself. Wait that long, then run status again. |
-| `run` is not empty | Run exactly that command. |
+| `run` is not empty (and `person` is false) | Run exactly that command. |
 | `next` is `done` | Stop. Bridgr is set up. |
 
 Exit code 2 means "more to do" and is normal. Exit code 1 is an error: read
