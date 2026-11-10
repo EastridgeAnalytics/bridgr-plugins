@@ -65,8 +65,10 @@ docker compose run --rm bridgr status --json
 Exit code 2 means "more to do" and is normal. Exit code 1 is an error: read
 [install/troubleshooting.md](install/troubleshooting.md).
 
-Bridgr stops for the owner three times: their AI key, their first sign-in with the licence terms, and their data.
-After that it works. A mailbox and the team come next, and the owner may leave them for later.
+Bridgr stops for the owner three times, in this order: the licence terms (they read and accept them, at their first
+sign-in on the screen or with `terms show` and `setup terms` in the terminal), their AI key, and their data. After
+that it works. Two short choices finish the list: a mailbox, which they can add or skip for now, and their team,
+which they can add with or without a mailbox. Then `next` is `done`.
 
 ## Only when you need it
 
