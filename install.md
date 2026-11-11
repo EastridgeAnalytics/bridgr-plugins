@@ -89,7 +89,7 @@ Exit code 2 means "more to do" and is normal. Exit code 1 is an error: read
 Bridgr stops for the owner three times, in this order, each on its own page in their browser: the licence terms
 (read them and click I accept), their AI key, and their data. After that it works. Two short choices finish the
 list: a mailbox, which they can add or skip for now, and their team, which joins once Bridgr has a web address.
-Then `next` is `done`.
+Then `next` is `done`. On a trial on this computer it's `done` right after the data: the rest is marked `later`.
 
 ## Only when you need it
 
