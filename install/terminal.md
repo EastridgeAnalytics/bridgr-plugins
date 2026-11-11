@@ -31,10 +31,10 @@ password) are typed by the person at a hidden prompt, or read from a file with `
 
 | Field | Meaning |
 |---|---|
-| `next` | The next step's id, or `done`. |
+| `next` | The next step's id, `licence` while Bridgr is still confirming its licence, or `done`. |
 | `person` | `true` when the next step needs the owner. |
 | `say_to_person` | What to say to the owner, word for word. Also set when `next` is `done`. |
-| `open_url` | The owner's one-time sign-in link, while the licence terms are next. Open it in their browser. |
+| `open_url` | While the licence terms are next: on a server, the owner's one-time sign-in link; on a trial, Bridgr's address, which signs the owner in on this computer. Open it in their browser. |
 | `run` | The command to run: now when `person` is false, after the owner is done when it is true. |
 | `wait_seconds` | Above 0 while Bridgr works by itself (mapping data). Wait, then check again. |
 | `steps` | Every step with its state (`done`, `next`, `todo`, `optional`, `later`) and why. |

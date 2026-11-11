@@ -111,24 +111,25 @@ Run this and read the JSON. Check the rows in this order; the first that fits is
 | If | Do |
 |---|---|
 | `next` is `terms`, `key`, `data` or `done` | Your part is over. Open `open_url` in the owner's browser if it is set (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows), else Bridgr's address. Say `say_to_person`, then the link on its own line. Stop. |
-| `person` is true | The address on a server: say `say_to_person` word for word and wait for them to say it's done. Then run `run`, and run status again. |
+| `person` is true | The address on a server, or a licence problem: say `say_to_person` word for word and wait for them to say it's done. Then run `run` if it's set, and run status again. |
 | `wait_seconds` is above 0 | Bridgr is working by itself. Wait that long, then run status again. |
 | `run` is set | Run exactly that command. Then run status again. |
 
 Exit code 2 means more to do and is normal. Exit code 1 is an error:
 [install/troubleshooting.md](install/troubleshooting.md). A trial's first answer looks like this (cut short):
 
-    {"next": "terms", "person": true, "open_url": "http://localhost:8080/#signin=...", "run": "",
+    {"next": "terms", "person": true, "open_url": "http://localhost:8080/", "run": "",
      "say_to_person": "Bridgr is ready. Open this link to accept the licence terms and give Bridgr your data. ...",
      "wait_seconds": 0, "steps": [...]}
 
 ## Bridgr stops for the owner
 
 On a server the address comes first: you check it, and only if the check fails does the owner's IT add one DNS
-record ([install/address.md](install/address.md), A). Then you hand over `open_url`, the owner's one-time sign-in
-link: it works once, for 24 hours, and asking status again gives the same link until it's used. Everything after
-that is on Bridgr's screen and the owner's to do: the licence terms, the AI key only without Claude Code's sign-in,
-and the data. You don't wait for them: `next` is `done` once they finish, without you.
+record ([install/address.md](install/address.md), A). Then you hand over `open_url`. On a server it's the owner's
+one-time sign-in link: it works once, for 24 hours, and asking status again gives the same link until it's used. On
+a trial it's Bridgr's own address, which signs the owner in on this computer. Everything after that is on Bridgr's
+screen and the owner's to do: the licence terms, the AI key only without Claude Code's sign-in, and the data. You
+don't wait for them: `next` is `done` once they finish, without you.
 
 ## After it's set up
 

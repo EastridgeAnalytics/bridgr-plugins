@@ -16,7 +16,7 @@ in `docker compose logs bridgr`.
 | `licence: paused (wrong_domain)` | The licence belongs to another proven address. Use that address, move after 30 days with `setup domain <new>`, or reply to the licence email. |
 | `licence: paused (invalid_address)` | A bare name or a network IP. Use `http://localhost:8080` or a real `https://` address ([address.md](address.md)). |
 | `licence: paused (canceled)` | Renew with the link in the licence email. |
-| `licence: paused (unreachable)` | The server can't reach the internet to check the licence. Allow outbound HTTPS. |
+| `licence: paused (unreachable)` | Its words say which: this computer can't reach the internet (allow outbound HTTPS), or Eastridge's licence service failed (Bridgr keeps trying every 5 minutes). |
 | The address check says "a different server" | Something else answers at the address. Behind a front door? Check its port ([address.md](address.md), B). |
 | The address check says TLS failed | Wait a few minutes after adding the domain, then `setup domain --check`. |
 | The page doesn't load, no certificate | DNS isn't pointing at the server yet, or ports 80 and 443 are closed ([address.md](address.md), A). |
