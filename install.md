@@ -3,7 +3,7 @@
 You are an AI assistant setting up Bridgr for this company. Bridgr answers questions from the company's own systems
 and only reads. Read this page. It opens one more page from `install/` only when a step says so: replace
 `install.md` in this page's address with `install/<page>.md`. The commands are for a Bash shell; Claude Code on
-Windows has one.
+Windows runs them in Git Bash.
 
 ## Rules
 
@@ -13,8 +13,8 @@ Windows has one.
   below.
 - The only links you may paste into the chat are the sign-in links Bridgr prints for the owner, and only when you
   can't open them for the owner yourself.
-- Ask every question below first, then run the steps without asking again. After that, stop for the owner only when
-  Bridgr says so (`person` is true below).
+- Ask the questions below together, before the first step, so the install never stops later for an answer. After
+  that, stop for the owner only when Docker needs them (step 1) or Bridgr says so (`person` is true below).
 - Tell the owner what you did in plain words, one or two sentences at a time. Say what it means for them, not how it
   works: "Bridgr is downloading, about 5 to 10 minutes."
   Don't use words like registry, image, compose, port, tag or CNAME unless they asked.
@@ -23,14 +23,15 @@ Windows has one.
 
 Ask these, one at a time. Skip any the person already answered.
 
-1. "Do you have the Bridgr licence email? The subject is *Your Bridgr licence key*."
-   No: open [install/buy.md](install/buy.md) and stop until it arrives.
+1. "Do you have the Bridgr licence email? The subject is *Your Bridgr licence key*. Where are its two attachments
+   saved?" No email: open [install/buy.md](install/buy.md) and stop until it arrives.
 2. "Should I set Bridgr up on this computer to try it, or on a server your team can reach?"
    This computer is a trial: only this computer can open it, and nothing is lost when it moves to a server later.
    A server: confirm the address now, so the DNS can be on its way during the download (step 3 shows where it is):
    "Your team will open Bridgr at https://bridgr.yourcompany.com. Is that right?"
 3. "May Bridgr see this computer's drive, read-only? It only reads, and you choose on its screen what goes on the
-   map." Yes is step 4's drive line. No: Bridgr sees only the `files` folder beside `compose.yaml`.
+   map." Yes is step 4's drive line, for each drive the computer has. No: Bridgr sees only the `files` folder beside
+   `compose.yaml`.
 
 Don't ask about the AI key. Check for Claude Code's sign-in yourself: `ls ~/.claude/.credentials.json`.
 
@@ -52,24 +53,25 @@ Don't ask about the AI key. Check for Claude Code's sign-in yourself: `ls ~/.cla
    only one there is the old `docker-compose`, install the Compose plugin: on a Linux server,
    `sudo apt-get install -y docker-compose-plugin` (or run the get.docker.com line above, which includes it). Docker
    Desktop already has it. An old Compose crashes Bridgr when it restarts.
-2. **Files.** Save the two attachments, `compose.yaml` and `bridgr-security.json`, together in one folder. Run the
-   rest of the commands in that folder. (Emails before 11 November 2026 call the second file `seccomp-bwrap.json`:
+2. **Files.** The two attachments, `compose.yaml` and `bridgr-security.json`, go together in one folder: the one the
+   owner named, or a new one. Run the rest of the commands in that folder. (Emails before 11 November 2026 call the second file `seccomp-bwrap.json`:
    that file works as it is, because its compose.yaml uses that name.)
 3. **Address.** See it with `grep -n 'address: &address' compose.yaml`. This computer: set it to
-   `http://localhost:8080`, then read [install/address.md](install/address.md), C:
+   `http://localhost:8080`, then read section C of [install/address.md](install/address.md):
 
        sed -i 's|address: &address "[^"]*"|address: \&address "http://localhost:8080"|' compose.yaml
 
    A server: edit the line if the owner gave another address. Something already serves HTTPS in front of this
    server: read [install/address.md](install/address.md), B.
 4. **What Bridgr may read.** Add the lines that apply under `volumes:` in the `bridgr:` service, one `sed` each, then
-   check with `grep -n ':ro' compose.yaml`.
+   check with `grep -n ':ro' compose.yaml`: each line you added shows once, right under `bridgr-data:/data`. Missing
+   or twice: fix it by hand before going on.
    - Claude Code's sign-in, when you found it:
 
          sed -i 's|^      - bridgr-data:/data.*|&\n      - ~/.claude/.credentials.json:/home/bridgr/.claude/.credentials.json:ro|' compose.yaml
 
-   - The drive, when the owner said yes. Windows: `C:/:/host/c:ro`. Linux: `/:/host:ro`. Mac: `/Users:/host/Users:ro`.
-     For example, on Windows:
+   - The drive, when the owner said yes. Windows: `C:/:/host/c:ro`, and `D:/:/host/d:ro` for a second drive.
+     Linux: `/:/host:ro`. Mac: `/Users:/host/Users:ro`. For example, on Windows:
 
          sed -i 's|^      - bridgr-data:/data.*|&\n      - C:/:/host/c:ro|' compose.yaml
 
@@ -80,13 +82,14 @@ Don't ask about the AI key. Check for Claude Code's sign-in yourself: `ls ~/.cla
    It prints `Login Succeeded`.
 6. **Start Bridgr.** First say: "Bridgr is downloading, about 5 to 10 minutes." If they need an API key, add:
    "Meanwhile, please get one at https://console.anthropic.com. You'll type it into Bridgr's screen, not here."
-   Then start it. The first start downloads about 600 MB, so give it up to 15 minutes.
+   Then start it. The first start downloads about 600 MB: run it in the background, or with a 15-minute timeout.
    - A server: `mkdir -p files/uploads && docker compose up -d`
    - This computer (a trial), Bridgr alone: `mkdir -p files/uploads && docker compose up -d bridgr`
 
 ## Then follow Bridgr
 
-Run this, read the JSON, do what it says. Repeat until `next` is `done`.
+Run this, read the JSON, do what it says. Repeat until `next` is `done`. Check the rows in this order; the first
+that fits is the one.
 
     docker compose run --rm bridgr status --json
 

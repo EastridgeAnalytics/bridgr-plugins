@@ -7,7 +7,7 @@ This repo holds the pages an AI assistant follows to install Bridgr or connect t
 ## Which one are you?
 
 **You're installing Bridgr for your company.** You have the licence email, or you're about to buy. Paste this into
-Claude Code on the server, or any assistant that can run commands there:
+Claude Code on the server, or on this computer to try it first, or any assistant that can run commands there:
 
     Install Bridgr for my company. Fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/install.md
 
