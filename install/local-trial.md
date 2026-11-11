@@ -19,7 +19,8 @@ The logs say `address: local trial at http://localhost:8080`, and the owner sees
 Code and Codex on this computer can connect. Claude's and ChatGPT's apps, and the rest of the team, need a web
 address.
 
-Go back to [install.md](../install.md), "Then follow Bridgr".
+Go back to [install.md](../install.md), "Then follow Bridgr". On a trial, `next` is `done` once the licence terms, the
+AI key and the data are done. The web address, mailbox and team show as `later` in `status`: skip them.
 
 ## Later: give it a web address
 
