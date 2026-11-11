@@ -37,6 +37,6 @@ email and the company's name. Monthly, cancel any time.
 ## 4. The email
 
 Within a minute the owner gets **Your Bridgr licence key** from info@eastridge-analytics.com, with `compose.yaml`
-and `seccomp-bwrap.json` attached. Nothing arrived? Check spam, then reply to the checkout receipt.
+and `bridgr-security.json` attached. Nothing arrived? Check spam, then reply to the checkout receipt.
 
 Back to [install.md](../install.md), "Six steps".
