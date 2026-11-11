@@ -6,6 +6,7 @@ in `docker compose logs bridgr`.
 | What you saw | What to do |
 |---|---|
 | `docker: command not found`, or `docker compose` isn't a command | Docker isn't installed: [install.md](../install.md), step 1. On Mac or Windows the person installs Docker Desktop and opens it once. |
+| Docker Desktop is installed but `docker info` says it can't connect | It is still starting. Wait a minute and try again. Still not: open Docker Desktop from the Start menu or Applications, and wait for it to say it's running. |
 | The download takes more than 10 minutes | Bridgr is about 600 MB. Let it finish. If it stopped, run the same start command again; it carries on. |
 | `unauthorized` or `no basic auth credentials` from `docker compose up` or `pull` | Run the registry sign-in again ([install.md](../install.md), step 5), then start again. |
 | `denied: This Bridgr licence is canceled` (or another status) on pull | The subscription isn't active. The owner renews with the link in the licence email; the same key works again. |
@@ -21,9 +22,10 @@ in `docker compose logs bridgr`.
 | The page doesn't load, no certificate | DNS isn't pointing at the server yet, or ports 80 and 443 are closed ([address.md](address.md), A). |
 | The sign-in page says "Ask them for your sign-in link", or a link says it's used or out of date | `docker compose run --rm bridgr signin` prints a fresh one for the owner; `signin EMAIL` for a person on the list. |
 | The AI key step stays on Claude Code | The `volumes:` line points at a file that isn't there, so Docker made a folder in its place. Delete that folder, check the path, start again. Or use the AI key. |
-| Bridgr says its Claude Code sign-in has run out | Sign in to Claude Code again on that computer, or type an Anthropic API key at Settings, AI key. With a Claude subscription and no API key: `claude setup-token` in the owner's own terminal prints a token that lasts a year; paste it into the same box. |
+| Bridgr says its Claude Code sign-in has run out | Sign in to Claude Code again on that computer. Or `claude setup-token` in the owner's own terminal prints a token that lasts a year: paste it at Settings, AI key. No Claude subscription: an Anthropic API key goes in the same box. |
 | `model key: rejected: the Claude Code token has expired` | Run `claude setup-token` again and paste the new token at Settings, AI key. |
 | `data add /files` says "not a full path: start it at the drive" | Windows' Git Bash changed `/files` into a Windows path. Run `data add` with no path; it means `/files`. |
+| The data window says "This Bridgr can't see any folders on the computer" | The drive line isn't in `compose.yaml` (install.md, step 4). Add it and start again with the same command as step 6, or upload a file instead. |
 | A question says "No data yet" | Add data first: Settings, Folders, or `data add /files` ([terminal.md](terminal.md)). |
 
 Still stuck? Reply to the licence email.

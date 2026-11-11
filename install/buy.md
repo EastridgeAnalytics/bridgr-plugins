@@ -22,7 +22,10 @@ Ask the owner. In order of what usually works best:
 
 - An address on the company's domain, like `bridgr.yourcompany.com`, and someone who can add a DNS record. Not
   needed for a trial on one computer.
-- An AI key from https://console.anthropic.com. Or Claude Code signed in on the computer Bridgr will run on.
+- Claude Code signed in on the computer Bridgr will run on: Bridgr answers with that. Without it, an Anthropic API
+  key from https://console.anthropic.com.
+- Docker. The install puts it on the computer if it isn't there. Docker Desktop (Mac and Windows) is free for a
+  company under 250 people and $10M a year; a bigger one needs Docker's paid plan.
 - The owner's email. The licence, first sign-in and billing go there. A work email gives the address
   `bridgr.<their domain>` by default; a personal email starts as a trial on this computer.
 
