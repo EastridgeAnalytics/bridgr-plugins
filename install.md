@@ -37,6 +37,11 @@ Ask these, one at a time. Skip any the person already answered.
    - Not installed, Mac or Windows: "Bridgr needs a free app called Docker Desktop. Please install it from
      https://www.docker.com/products/docker-desktop/, open it once, then tell me." Wait for them.
    - They can't install software here: stop. Eastridge can host Bridgr instead; they reply to the licence email.
+
+   Then run `docker compose version`. It must print `Docker Compose version v2` or later. If it fails, or the
+   only one there is the old `docker-compose`, install the Compose plugin: on a Linux server,
+   `sudo apt-get install -y docker-compose-plugin` (or run the get.docker.com line above, which includes it). Docker
+   Desktop already has it. An old Compose crashes Bridgr when it restarts.
 2. **Files.** Save the two attachments, `compose.yaml` and `bridgr-security.json`, together in one folder. Run the
    rest of the commands in that folder. (Emails before 11 November 2026 call the second file `seccomp-bwrap.json`:
    that file works as it is, because its compose.yaml uses that name.)
