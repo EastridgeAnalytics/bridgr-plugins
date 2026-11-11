@@ -1,8 +1,8 @@
 {
   "name": "bridgr",
   "displayName": "Bridgr",
-  "version": "0.2.2",
-  "description": "Ask your company's own Bridgr about its data: where it stands, what it still needs, what it noticed, and questions answered from its read-only access. Connects to your company's Bridgr only; you sign in and approve in your browser, never a password here.",
+  "version": "0.3.0",
+  "description": "Ask your company's own Bridgr about its data: where it stands, what it still needs, what it noticed, and questions answered from its read-only access. You sign in and approve in your browser; never a password here.",
   "author": {
     "name": "Eastridge Analytics",
     "url": "https://www.eastridge-analytics.com"
@@ -25,7 +25,7 @@
     "bridgr_url": {
       "type": "string",
       "title": "Your company's Bridgr address",
-      "description": "From your Bridgr welcome or Connect data email, just https:// and the host, with no /mcp and no trailing slash. Example: https://yourcompany.eastridge-analytics.com. Bridgr only lets you in if you are on that company's list.",
+      "description": "https:// and the host only, no /mcp and no trailing slash. Example: https://yourcompany.eastridge-analytics.com",
       "required": true
     }
   }

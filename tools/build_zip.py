@@ -9,8 +9,7 @@
 
 A company's zip is the same plugin (name `bridgr`, same skills) with three things set: the display name
 ("Bridgr · Company Name"), the connector address (Claude's .mcp.json and Codex's codex.mcp.json), and the
-version label (0.2.2+company-name). The setup guide is told the address, so it never asks. It asks nothing on
-install. Bridgr itself builds the same thing for its own company (bridgr/plugin_zip.py in bridgr-v3); this script is
+version label (0.3.0+company-name). It asks nothing on install. Bridgr itself builds the same thing for its own company (bridgr/plugin_zip.py in bridgr-v3); this script is
 the reference and the generic release.
 """
 from __future__ import annotations
@@ -28,17 +27,6 @@ ROOT = Path(__file__).resolve().parent.parent
 PLUGIN = ROOT / "plugins" / "bridgr"
 # Keep icon: Desktop's uploaded plugin needs the path to its bundled artwork. Older Code may warn, but loads it.
 LISTING = ("documentationUrl", "supportUrl", "privacyPolicyUrl")
-GUIDE = "skills/bridgr-connect/SKILL.md"
-
-
-def guide(text: str, display: str, address: str) -> str:
-    """The setup guide, told this company's address before its rules, so it never asks for it (step 1)."""
-    block = (f"## This company\n\nThis plugin is for {display}. Its **company address** is `{address}` and its\n"
-             f"**address** is `{address}/mcp`: the address from their Bridgr email, already here. Never ask the person\n"
-             f"for it: skip step 1 and use these. If the plugin's own **Connect** is greyed out, add a custom connector\n"
-             f"with this address instead (step 2).\n\n")
-    at = text.find("## Rules")
-    return text[:at] + block + text[at:] if at >= 0 else text + "\n" + block
 
 
 def slug(name: str) -> str:
@@ -73,8 +61,6 @@ def files(company: str = "", url: str = "") -> dict[str, bytes]:
         server = {"type": "http", "url": f"{address}/mcp"}
         out[".mcp.json"] = (json.dumps({"mcpServers": {"bridgr": server}}, indent=2) + "\n").encode()
         out["codex.mcp.json"] = (json.dumps({"mcpServers": {"bridgr": {"url": f"{address}/mcp"}}}, indent=2) + "\n").encode()
-        if GUIDE in out:
-            out[GUIDE] = guide(out[GUIDE].decode(), company, address).encode()
     out[".claude-plugin/plugin.json"] = (json.dumps(claude, indent=2, ensure_ascii=False) + "\n").encode()
     out[".codex-plugin/plugin.json"] = (json.dumps(codex, indent=2, ensure_ascii=False) + "\n").encode()
     return out

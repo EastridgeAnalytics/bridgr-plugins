@@ -1,100 +1,118 @@
 # Install Bridgr for your company
 
-You are an AI assistant setting up Bridgr, a read-only data assistant, for this company. Read this page only. It
-sends you to one more page when you need it.
-
-Every page here sits next to this one: replace `install.md` in this page's address with `install/<page>.md`.
+You are an AI assistant setting up Bridgr for this company. Bridgr answers questions from the company's own systems
+and only reads. Read this page. It opens one more page from `install/` only when a step says so: replace
+`install.md` in this page's address with `install/<page>.md`. The commands are for a Bash shell; Claude Code on
+Windows has one.
 
 ## Rules
 
-- Never ask for, accept, show or repeat a password, API key, licence key, token or sign-in link in the chat.
-  Secrets go into Bridgr's own page in the person's browser, or a hidden prompt.
+- Never ask for, show or repeat a password, API key or licence key.
+  Secrets are typed by the person at a hidden prompt. Or they go into Bridgr's own screen in their browser.
+- `compose.yaml` holds the licence key. Never print it whole: read or change one line at a time, with the commands
+  below.
+- The only links you may paste into the chat are the sign-in links Bridgr prints for the owner, and only when you
+  can't open them for the owner yourself.
 - Stop for the owner only when Bridgr says so (`person` is true below). Do everything else yourself.
-- Tell the person what you did and what you saw at each step, in plain words. The person may not be technical.
-  Say what it means for them, not how it works: "Bridgr is downloading, about 5 to 10 minutes", not "pulling
-  layers from the registry". Don't use words like registry, image, compose, port, tag or CNAME unless they
-  asked. Keep each update to one or two short sentences, and say when they need to do something.
+- Tell the owner what you did in plain words, one or two sentences at a time. Say what it means for them, not how it
+  works: "Bridgr is downloading, about 5 to 10 minutes."
+  Don't use words like registry, image, compose, port, tag or CNAME unless they asked.
 
-## Start: two questions
+## Before you start
 
-1. Ask: **"Do you have the Bridgr licence email (subject: Your Bridgr licence key)?"**
-   - **No:** open [install/buy.md](install/buy.md) and stop here until it arrives.
-2. Ask: **"Should I set up Bridgr on this computer to try it, or on a server your team can reach?"**
-   - **This computer:** a trial. Only this computer can open it. Nothing is lost when it moves to a server later.
-   - **A server:** the team will reach it at an address like `https://bridgr.yourcompany.com`.
+Ask these, one at a time. Skip any the person already answered.
 
-## Five steps
+1. "Do you have the Bridgr licence email? The subject is *Your Bridgr licence key*."
+   No: open [install/buy.md](install/buy.md) and stop until it arrives.
+2. "Should I set Bridgr up on this computer to try it, or on a server your team can reach?"
+   This computer is a trial: only this computer can open it, and nothing is lost when it moves to a server later.
+3. "Bridgr needs an Anthropic API key to answer questions. If Claude Code is signed in on this computer, Bridgr can
+   use that instead. Which would you like?"
 
-1. **Docker.** Run `docker compose version`. If it works, go on. If not:
-   - **Linux server:** install it yourself: `curl -fsSL https://get.docker.com | sh`, then
-     `sudo systemctl enable --now docker`. Tell the person: "Installing Docker, the free tool Bridgr runs in."
-   - **Mac or Windows:** tell the person: "Bridgr needs a free app called Docker Desktop. Please install it from
-     https://www.docker.com/products/docker-desktop/, open it once, then tell me 'done'." Wait for them.
-   - **They can't install software here:** stop and tell them Eastridge can host Bridgr for them instead; they reply
-     to the licence email.
-2. **Files.** From the email, save `compose.yaml` and `seccomp-bwrap.json` together in one folder.
-3. **Address.** Read the line starting `address: &address` in `compose.yaml`.
-   - **This computer:** set it to `http://localhost:8080` and read [install/local-trial.md](install/local-trial.md).
-   - **A server:** confirm the address with the person in plain words ("Your team will open Bridgr at
-     https://bridgr.yourcompany.com. Is that right?") and edit the line if not. If the server already has HTTPS in
-     front of it (a load balancer, ingress, or a host that serves HTTPS), read [install/proxy.md](install/proxy.md).
-4. **Sign in to Bridgr's download,** in that folder. This reads the licence key without printing it:
+## Six steps
 
-   ```sh
-   grep -o 'brg_[a-z]*_[0-9a-f]*' compose.yaml | docker login registry.bridgr-platform.com -u licence --password-stdin
-   ```
+1. **Docker.** Run `docker info --format '{{.ServerVersion}}'`. A version number: go on. Otherwise:
+   - "Cannot connect" on Mac or Windows: Docker Desktop is installed but not running. Ask them to open it.
+   - Not installed, Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`.
+   - Not installed, Mac or Windows: "Bridgr needs a free app called Docker Desktop. Please install it from
+     https://www.docker.com/products/docker-desktop/, open it once, then tell me." Wait for them.
+   - They can't install software here: stop. Eastridge can host Bridgr instead; they reply to the licence email.
+2. **Files.** Save the two attachments, `compose.yaml` and `seccomp-bwrap.json`, together in one folder. Run the
+   rest of the commands in that folder.
+3. **Address.** See it with `grep -n 'address: &address' compose.yaml`.
+   - This computer: set it to `http://localhost:8080`, then read [install/address.md](install/address.md), C:
+
+         sed -i 's|address: &address "[^"]*"|address: \&address "http://localhost:8080"|' compose.yaml
+
+   - A server: confirm it in plain words: "Your team will open Bridgr at https://bridgr.yourcompany.com. Is that
+     right?" Edit the line if not. Something already serves HTTPS in front of this server: read
+     [install/address.md](install/address.md), B.
+4. **Claude Code instead of a key** (only if they chose it). Check `ls ~/.claude/.credentials.json` finds the file;
+   on a Mac it isn't a file (the sign-in is in the keychain), so they use an API key. Then give Bridgr read-only use
+   of it:
+
+       sed -i 's|^      - bridgr-data:/data.*|&\n      - ~/.claude/.credentials.json:/home/bridgr/.claude/.credentials.json:ro|' compose.yaml
+       grep -n 'credentials.json' compose.yaml
+
+5. **Sign in to Bridgr's download.** This reads the licence key without printing it:
+
+       grep -o 'brg_[a-z]*_[0-9a-f]*' compose.yaml | docker login registry.bridgr-platform.com -u licence --password-stdin
 
    It prints `Login Succeeded`.
-5. **Start Bridgr.** The first start downloads Bridgr, about 5 to 10 minutes. Start it now and, while it downloads,
-   tell the person: "Bridgr is downloading, about 5 to 10 minutes. Meanwhile, please get an Anthropic API key at
-   https://console.anthropic.com (you'll paste it into Bridgr's page, not here)."
-
-   ```sh
-   mkdir -p files/uploads && docker compose up -d
-   ```
-
-   On this computer, use `docker compose up -d bridgr` instead ([install/local-trial.md](install/local-trial.md)).
-
-## Then give the person one link
-
-When Bridgr is running, run this and give the person the one-time link it prints, privately (not in a team chat):
-
-```sh
-docker compose run --rm bridgr signin
-```
-
-Say: "Open this link to finish setting up Bridgr. It works once." Opening it signs them in, on this computer or a
-server alike. The link is a sign-in, so don't keep it or repeat it after they've opened it.
-
-From there Bridgr walks them through three screens: accept the licence terms, paste their AI key, add their data.
+6. **Start Bridgr.** First say: "Bridgr is downloading, about 5 to 10 minutes." If they chose an API key, add:
+   "Meanwhile, please get one at https://console.anthropic.com. You'll type it into Bridgr's screen, not here."
+   Then start it. The first start downloads about 600 MB, so give it up to 15 minutes.
+   - A server: `mkdir -p files/uploads && docker compose up -d`
+   - This computer (a trial), Bridgr alone: `mkdir -p files/uploads && docker compose up -d bridgr`
 
 ## Then follow Bridgr
 
-Run this, read the JSON, and do what it says. Repeat until `next` is `done`.
+Run this, read the JSON, do what it says. Repeat until `next` is `done`.
 
-```sh
-docker compose run --rm bridgr status --json
-```
+    docker compose run --rm bridgr status --json
 
 | If | Do |
 |---|---|
-| `person` is true | If `run` is not empty, run it first and give the owner what it prints privately (a one-time sign-in link). Then say `say_to_person` word for word, and wait for them to say "done". |
+| `person` is true | If `open_url` is set, open it in the owner's browser (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows). If you can't, paste it. Say `say_to_person` word for word and wait for them to say they're done. Then, if `run` is set, run it. |
 | `wait_seconds` is above 0 | Bridgr is working by itself. Wait that long, then run status again. |
-| `run` is not empty (and `person` is false) | Run exactly that command. |
-| `next` is `done` | Stop. Bridgr is set up. |
+| `run` is set and `person` is false | Run exactly that command. |
+| `next` is `done` | Say `say_to_person`. Bridgr is set up. |
 
-Exit code 2 means "more to do" and is normal. Exit code 1 is an error: read
-[install/troubleshooting.md](install/troubleshooting.md).
+`next` is `address`, `terms`, `key`, `data` or `done`. Exit code 2 means more to do and is normal. Exit code 1 is an
+error: [install/troubleshooting.md](install/troubleshooting.md). A trial's first answer looks like this (cut short):
 
-Bridgr stops for the owner three times, in this order, each on its own page in their browser: the licence terms
-(read them and click I accept), their AI key, and their data. After that it works. Two short choices finish the
-list: a mailbox, which they can add or skip for now, and their team, which joins once Bridgr has a web address.
-Then `next` is `done`. On a trial on this computer it's `done` right after the data: the rest is marked `later`.
+    {"next": "terms", "person": true, "open_url": "http://localhost:8080/#signin=...", "run": "",
+     "say_to_person": "Bridgr is ready for you. I've opened your sign-in link; ...", "wait_seconds": 0, "steps": [...]}
 
-## Only when you need it
+## Bridgr stops for the owner
 
-- Owner prefers the terminal to the screen, or wants every command: [install/terminal.md](install/terminal.md)
-- Giving Bridgr a web address later: [install/web-address.md](install/web-address.md)
-- Bringing in the team and their assistants: [install/team.md](install/team.md)
-- Updates, backups, cancelling, help: [install/run-it.md](install/run-it.md)
-- A person installing by hand, without an assistant: [install/by-hand.md](install/by-hand.md)
+On a server the address comes first: you check it, and only if the check fails does the owner's IT add one DNS
+record ([install/address.md](install/address.md), A). Then three stops, in this order:
+
+- **The licence terms.** Status gives you `open_url`, their one-time sign-in link. Open it. They land on the licence
+  terms, tick the box and click **I accept**. The link works once, for 24 hours; asking status again gives the same
+  link until it's used.
+- **The AI key.** A box asks for it on the screen, or they run `docker compose run --rm bridgr setup key` in their
+  own terminal and type it at the hidden prompt. With Claude Code (step 4) this stop is already done.
+- **The data.** They upload a file at Settings, Folders, or connect a read-only database at Settings, Connections.
+  Or files go in the `files` folder beside `compose.yaml` (Bridgr sees it as `/files`): if they give you a file's
+  path, copy it there yourself. Then run `docker compose run --rm bridgr data add /files`. Status then waits while
+  Bridgr maps it, a few minutes.
+
+Then `next` is `done`. The team is optional and never blocks it; on a trial the address and the team say `later`.
+
+## After it's set up
+
+- **People:** Settings, People, or `docker compose run --rm bridgr people add EMAIL --name "Their Name"`. It needs a
+  web address first. Each person gets a one-time sign-in link the owner sends them privately. To add Bridgr to their
+  own assistant, they paste the connect line from the [README](README.md).
+- **A web address later:** [install/address.md](install/address.md), D.
+- **A mailbox** is optional: Settings, Mailbox, whenever the company wants Bridgr to send email.
+- **Update:** change the version on the `image:` line, then `docker compose pull && docker compose up -d`. Data stays.
+- **Start at boot:** `sudo systemctl enable docker`. Bridgr restarts by itself.
+- **Back up:** the `bridgr-data` Docker volume.
+- **Cancel or change the card:** the manage link in the licence email. Bridgr pauses when the paid period ends;
+  nothing is deleted.
+- **Help:** reply to the licence email, or https://www.bridgr-platform.com/contact.
+
+Every setting has a terminal command, and the owner can install by hand: [install/terminal.md](install/terminal.md).
