@@ -21,7 +21,8 @@ password) are typed by the person at a hidden prompt, or read from a file with `
 | Settings, Mailbox (optional) | `mailbox status`, `mailbox add --provider gmail --address bridgr@yourcompany.com`, `mailbox skip`, `mailbox remove` |
 | Ask a question | `ask "<question>"` |
 
-- Files in `files/` beside `compose.yaml` are at `/files` inside Bridgr. Leave `files/uploads` in place.
+- Files in `files/` beside `compose.yaml` are at `/files` inside Bridgr; `data add` with no path means `/files`.
+  Leave `files/uploads` in place.
 - Databases need `BRIDGR_CREDENTIALS_ENABLED: "true"` in `compose.yaml` and a read-only account made for Bridgr.
 - Without a mailbox, `people add` prints a one-time sign-in link for the owner to send that person privately. It
   lasts 24 hours.

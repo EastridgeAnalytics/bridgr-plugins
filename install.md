@@ -73,7 +73,7 @@ Run this, read the JSON, do what it says. Repeat until `next` is `done`.
 
 | If | Do |
 |---|---|
-| `person` is true | If `open_url` is set, open it in the owner's browser (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows). If you can't, paste it. Say `say_to_person` word for word and wait for them to say they're done. Then, if `run` is set, run it. |
+| `person` is true | If `open_url` is set, open it in the owner's browser (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows). If you can't, paste it. Say `say_to_person` word for word and wait for them to say they're done. Then, if `run` is set, run it. At the data stop, see "The data" below. |
 | `wait_seconds` is above 0 | Bridgr is working by itself. Wait that long, then run status again. |
 | `run` is set and `person` is false | Run exactly that command. |
 | `next` is `done` | Say `say_to_person`. Bridgr is set up. |
@@ -95,9 +95,9 @@ record ([install/address.md](install/address.md), A). Then three stops, in this 
 - **The AI key.** A box asks for it on the screen, or they run `docker compose run --rm bridgr setup key` in their
   own terminal and type it at the hidden prompt. With Claude Code (step 4) this stop is already done.
 - **The data.** They upload a file at Settings, Folders, or connect a read-only database at Settings, Connections.
-  Or files go in the `files` folder beside `compose.yaml` (Bridgr sees it as `/files`): if they give you a file's
-  path, copy it there yourself. Then run `docker compose run --rm bridgr data add /files`. Status then waits while
-  Bridgr maps it, a few minutes.
+  Or files go in the `files` folder beside `compose.yaml`: if they give you a file's path, copy it there yourself,
+  then run `docker compose run --rm bridgr data add` (no path: it reads that folder). It returns once the files are
+  on the map, under a minute for a spreadsheet. A big folder takes longer; status then says how long to wait.
 
 Then `next` is `done`. The team is optional and never blocks it; on a trial the address and the team say `later`.
 
