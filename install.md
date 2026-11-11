@@ -37,8 +37,9 @@ Ask these, one at a time. Skip any the person already answered.
    - Not installed, Mac or Windows: "Bridgr needs a free app called Docker Desktop. Please install it from
      https://www.docker.com/products/docker-desktop/, open it once, then tell me." Wait for them.
    - They can't install software here: stop. Eastridge can host Bridgr instead; they reply to the licence email.
-2. **Files.** Save the two attachments, `compose.yaml` and `seccomp-bwrap.json`, together in one folder. Run the
-   rest of the commands in that folder.
+2. **Files.** Save the two attachments, `compose.yaml` and `bridgr-security.json`, together in one folder. Run the
+   rest of the commands in that folder. (Emails before 11 November 2026 call the second file `seccomp-bwrap.json`:
+   that file works as it is, because its compose.yaml uses that name.)
 3. **Address.** See it with `grep -n 'address: &address' compose.yaml`.
    - This computer: set it to `http://localhost:8080`, then read [install/address.md](install/address.md), C:
 
