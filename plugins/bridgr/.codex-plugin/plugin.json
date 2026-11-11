@@ -1,7 +1,7 @@
 {
   "name": "bridgr",
-  "version": "0.2.2",
-  "description": "Ask your company's own Bridgr about its data: where it stands, what it still needs, what it noticed, and questions answered from its read-only access.",
+  "version": "0.3.0",
+  "description": "Ask your company's own Bridgr about its data: where it stands, what it still needs, what it noticed, and questions answered from its read-only access. You sign in and approve in your browser; never a password here.",
   "author": {
     "name": "Eastridge Analytics",
     "url": "https://www.eastridge-analytics.com"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Bridgr",
     "shortDescription": "Your company's data, read-only, through your own Bridgr",
-    "longDescription": "Bridgr maps what a company's data means and answers questions from its own read-only access. This plugin walks you through connecting Codex to your company's Bridgr (you give the address from your Bridgr email, sign in and approve in your browser), then knows Bridgr's tools. Never a password here.",
+    "longDescription": "Bridgr answers questions from your company's own systems, read-only. This plugin knows Bridgr's tools. Connect with codex mcp add and sign in in your browser; never a password here.",
     "developerName": "Eastridge Analytics",
     "category": "Productivity",
     "capabilities": [

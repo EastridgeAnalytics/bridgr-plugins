@@ -25,4 +25,4 @@ jobs:
       - name: Attach to the release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "Bridgr plugin $GITHUB_REF_NAME" --notes "Upload in Claude Desktop: Settings → Customize → Plugins → Add → Upload plugin. It asks for your company's Bridgr address. If your company's Bridgr offers its own zip (Settings → Connected assistants), use that one instead."
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "Bridgr plugin $GITHUB_REF_NAME" --notes "Upload in Claude Desktop: Settings → Customize → Plugins → Add → Upload plugin. It asks for your company's Bridgr address. If your Bridgr offers its own zip (Settings → Connected assistants), use that one. The rest: setup.md."
