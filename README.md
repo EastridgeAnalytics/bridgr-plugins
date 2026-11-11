@@ -29,7 +29,7 @@ That's it. The pages do the rest.
 
 ## Safety
 
-- No password, key or token goes through the assistant. You sign in on your Bridgr's own page and click Approve yourself.
+- The assistant never sees a password, key or token. You sign in on your Bridgr's own page and click Approve yourself.
 - Bridgr lets you in only if you're on your company's list, and checks again on every call.
 - Bridgr only reads. It never changes your company's systems.
 
