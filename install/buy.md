@@ -31,10 +31,10 @@ Ask the owner. In order of what usually works best:
 
 ## 3. Buy
 
-https://buy.stripe.com/test_6oU4gz6Uz4jw77h75Z7ss06
+https://buy.stripe.com/dRm5kD92H9DQ4Z9dun7ss05
 
-Pre-release: Stripe's test mode. Card `4242 4242 4242 4242`, any future date, any CVC. The person enters the owner's
-email and the company's name. Monthly, cancel any time.
+The person pays here themselves, by card: $999 a month, cancel any time. They enter the owner's email and the
+company's name, and accept the licence terms. Never enter card details for them.
 
 ## 4. The email
 

@@ -1,6 +1,6 @@
 # Bridgr Licence Terms
 
-Version 2026-11-11.
+Version 2026-11-11.2.
 
 These terms are an agreement between Eastridge Analytics LLC ("Eastridge", "we") and the company that subscribes to
 Bridgr ("Customer", "you"). They apply to Bridgr in every form: the software image you run on your own server
@@ -80,35 +80,62 @@ where the law requires otherwise.
 These terms last while you have a subscription. Either of us may end them if the other materially breaches them and
 does not fix the breach within 15 days of notice; we may end them at once for a breach of section 2 or 3. When they
 end, your licence ends: stop using the Software and delete every copy of it. Your data remains yours to keep.
-Sections 2 to 5 and 8 to 11 survive.
+Sections 2 to 5 and 8 to 13 survive.
 
-## 8. No warranty
+## 8. Bridgr's answers and your responsibility
+
+Bridgr is an assistive tool. It reads your systems and uses AI to answer questions, summarise and draft. Its answers,
+figures, summaries and drafts ("output") are a starting point, not established fact. Bridgr may misread data, miss
+context, use the wrong table or produce output that is incomplete or wrong.
+
+**You remain responsible for every decision you make with Bridgr's output.** Check output before you rely on it, act
+on it, publish it or send it to anyone. Bridgr is not an accountant, lawyer, auditor or other professional adviser, and
+using it does not replace their judgement or relieve you of any professional, legal or regulatory duty.
+
+You are also responsible for:
+
+1. using Bridgr only for lawful purposes and in line with these terms;
+2. not using it to violate anyone's rights, including privacy and intellectual property rights;
+3. the confidentiality and security of the data Bridgr reads and of what it produces for you; and
+4. keeping your licence key, sign-in links and the access you give Bridgr secure.
+
+## 9. No warranty
 
 The Software is provided "as is" and "as available". To the fullest extent the law allows, Eastridge disclaims all
-warranties, express or implied, including merchantability, fitness for a particular purpose, title and
-non-infringement. Bridgr's answers are produced with AI from your data and may be incomplete or wrong. Check anything
-important before you rely on it.
+warranties, express or implied, including merchantability, fitness for a particular purpose, title, accuracy and
+non-infringement. Eastridge does not warrant that output will be accurate, complete or reliable, or that the Software
+will run without interruption or error.
 
-## 9. Limitation of liability
+## 10. Limitation of liability
 
 To the fullest extent the law allows, neither party is liable for any indirect, incidental, special, consequential or
-punitive damages, or for lost profits, revenue or data, however caused. Eastridge's total liability arising from these
+punitive damages, or for lost profits, revenue, goodwill or data, however caused, even if told they were possible.
+Eastridge is not liable for loss arising from your reliance on output. Eastridge's total liability arising from these
 terms or the Software is limited to the fees you paid in the 12 months before the event giving rise to the claim.
-These limits do not apply to your breach of section 2 or 3, or to your payment obligations.
+These limits do not apply to your breach of section 2 or 3, your obligations under section 11, or your payment
+obligations.
 
-## 10. Protecting the Software
+## 11. Indemnity
+
+You will defend and indemnify Eastridge, and hold it harmless, against any third-party claim, and the damages,
+liabilities, costs and expenses (including reasonable attorneys' fees) that follow from it, arising from your use of
+the Software, your reliance on output, the data and systems you let Bridgr read, or your breach of these terms or the
+law. Eastridge will tell you promptly about the claim and let you control its defence, and you will not settle it in a
+way that admits fault by Eastridge without Eastridge's consent.
+
+## 12. Protecting the Software
 
 A breach of section 2 or 3 would cause Eastridge harm that money alone could not repair. Eastridge may seek an
 injunction or other equitable relief for it, in any court with jurisdiction, in addition to any other remedy and
 without posting a bond where the law allows.
 
-## 11. General
+## 13. General
 
 - **Changes.** We may update these terms. A new version applies from the next renewal after we tell you, or when your
   owner accepts it on Bridgr's screen, whichever is first.
 - **Governing law.** These terms are governed by the laws of the State of North Carolina, without regard to
   conflict-of-law rules, and the state and federal courts located in North Carolina have exclusive jurisdiction,
-  except for relief under section 10.
+  except for relief under section 12.
 - **Export.** You will comply with the export and sanctions laws that apply to the Software.
 - **U.S. Government.** The Software is commercial computer software provided with only the rights in these terms.
 - **Assignment.** You may not assign these terms without our consent, except to a successor of your whole business.
