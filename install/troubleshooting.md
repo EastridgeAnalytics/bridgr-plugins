@@ -6,6 +6,7 @@ in `docker compose logs bridgr`.
 | What you saw | What to do |
 |---|---|
 | `docker: command not found`, or `docker compose` isn't a command | Docker isn't installed: [install.md](../install.md), step 1. On Mac or Windows the person installs Docker Desktop and opens it once. |
+| Docker Desktop is installed but `docker info` says it can't connect | It is still starting. Wait a minute and try again. Still not: open Docker Desktop from the Start menu or Applications, and wait for it to say it's running. |
 | The download takes more than 10 minutes | Bridgr is about 600 MB. Let it finish. If it stopped, run the same start command again; it carries on. |
 | `unauthorized` or `no basic auth credentials` from `docker compose up` or `pull` | Run the registry sign-in again ([install.md](../install.md), step 5), then start again. |
 | `denied: This Bridgr licence is canceled` (or another status) on pull | The subscription isn't active. The owner renews with the link in the licence email; the same key works again. |
