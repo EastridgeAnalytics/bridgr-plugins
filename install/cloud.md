@@ -115,9 +115,14 @@ gcloud billing projects describe "$PROJECT" --format='value(billingEnabled)'
 gcloud services enable compute.googleapis.com --project="$PROJECT"
 ```
 
-Billing must say `True` and enabling the API must succeed. Otherwise stop for the person. Prepare the SSH public
-key with the server's username. This uses instance SSH keys, not OS Login. If company policy requires OS Login,
-stop for the cloud team to arrange access. Don't turn that policy off.
+Billing must be linked and the Compute API enabled before creating anything. If the first command says `True`
+and the second succeeds, go on. If the cloud team has already confirmed both for this project, skip those two
+commands. A denied check or a disabled Cloud Billing API does not mean billing is unlinked. Ask the cloud team to
+confirm both, then carry on only after they do. Don't enable another API or add billing permissions just to read
+this check. Actual billing isn't linked or Compute isn't enabled: stop until the cloud team fixes that.
+
+Prepare the SSH public key with the server's username. This uses instance SSH keys, not OS Login. If company policy
+requires OS Login, stop for the cloud team to arrange access. Don't turn that policy off.
 
 ```bash
 printf 'bridgr:%s\n' "$(cat "$KEY.pub")" > bridgr-ssh.pub
