@@ -289,8 +289,11 @@ ssh -i "$KEY" "$SERVER" 'cd bridgr && sudo docker compose run --rm bridgr status
 For `run`, keep the returned command unchanged apart from `sudo docker` instead of `docker` for this Ubuntu user.
 Never run it on the laptop. Exit code 2 means more to do and is normal. Exit code 1 is an error: read
 [troubleshooting.md](troubleshooting.md), running its checks over SSH too. Don't print status JSON containing an
-owner link into a shared log. Open the link privately. Never paste cloud keys, licence keys or sign-in links into
-a report.
+owner link into a shared log. Open the link privately. Save status JSON only in a file only the person can read
+(`umask 077`). Never paste cloud keys, licence keys or sign-in links into a report.
+
+The owner link works once, in one browser. To sign the owner in on another browser or computer, run
+`ssh -i "$KEY" "$SERVER" 'cd bridgr && sudo docker compose run --rm bridgr signin'` for a fresh link.
 
 Open a page only in the person's permitted laptop browser. If you cannot open it privately, ask the person to open
 it themselves. Do not try `xdg-open` on the server or forward a localhost trial instead of fixing the public address.
