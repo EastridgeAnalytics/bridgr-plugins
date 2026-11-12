@@ -45,7 +45,10 @@ They type it on Bridgr's screen later, never here.
 
 1. **Docker.** Run `docker info --format '{{.ServerVersion}}'`. A version number: go on. "Cannot connect": Docker is
    installed but not running; start it as below and wait. Not installed: install it.
-   - Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`.
+   - Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`. Ubuntu 24.04
+     also needs Bridgr's sandbox allowed, or Bridgr maps data but can't answer:
+     `echo kernel.apparmor_restrict_unprivileged_userns=0 | sudo tee /etc/sysctl.d/60-bridgr-sandbox.conf && sudo sysctl -p /etc/sysctl.d/60-bridgr-sandbox.conf`.
+     Apply only that file, never `sysctl --system`, which can cut Docker's network.
    - Windows: say "Installing Docker, the free app Bridgr runs in. Windows will ask you to allow it." Then:
 
          curl -L -o "Docker Desktop Installer.exe" "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"

@@ -208,6 +208,17 @@ It must be x86_64 and Ubuntu 24.04. Now do [install.md](../install.md)'s six ste
 
    Skip the install line if Docker already works. Compose must be v2 or later. Use `sudo docker` for this fresh
    Ubuntu user throughout, including status and any command Bridgr returns. Don't install Docker on the laptop.
+
+   Then let Bridgr's sandbox run. Ubuntu 24.04 cloud images stop programs from making their own private sandbox,
+   and without it Bridgr can map data but can't answer a question. This one setting allows it, now and after a
+   restart:
+
+   ```bash
+   ssh -i "$KEY" "$SERVER" 'echo kernel.apparmor_restrict_unprivileged_userns=0 | sudo tee /etc/sysctl.d/60-bridgr-sandbox.conf >/dev/null && sudo sysctl -p /etc/sysctl.d/60-bridgr-sandbox.conf'
+   ```
+
+   Apply only that file. Don't run `sysctl --system`: it can switch off the network forwarding Docker turned on,
+   and the address stops answering until Docker restarts.
 2. **Files.** From the private folder holding the two licence email attachments:
 
    ```bash
