@@ -313,19 +313,20 @@ until this laptop's `bridgr_status` tool succeeds. A successful status command o
   aws ec2 delete-security-group --group-id "$SG"
   aws ec2 delete-key-pair --key-name bridgr
   # Google Cloud
-  gcloud compute instances delete bridgr --project="$PROJECT" --zone="$ZONE"
-  gcloud compute firewall-rules delete bridgr-web --project="$PROJECT"
+  gcloud compute instances delete bridgr --project="$PROJECT" --zone="$ZONE" --quiet
+  gcloud compute firewall-rules delete bridgr-web --project="$PROJECT" --quiet
   # DigitalOcean
-  doctl compute droplet delete "$DROPLET"
-  doctl compute firewall delete "$FIREWALL"
-  doctl compute ssh-key delete "$SSH_ID"
+  doctl compute droplet delete "$DROPLET" --force
+  doctl compute firewall delete "$FIREWALL" --force
+  doctl compute ssh-key delete "$SSH_ID" --force
   # Hetzner
   hcloud server delete bridgr
   hcloud firewall delete bridgr
   hcloud ssh-key delete bridgr
   ```
 
-  Run only the chosen cloud's lines. Never delete a shared key entry or firewall. On Hetzner, check for a remaining
+  Run only the chosen cloud's lines, only after the owner says yes. The no-prompt flags are not permission to
+  delete anything. Never delete a shared key entry or firewall. On Hetzner, check for a remaining
   primary IPv4 and remove it in the console if it belongs only to this server. Remove only this installation's
   DNS record too. Deleting the server doesn't cancel the Bridgr subscription. The owner uses the manage link in
   their licence email to cancel it.
