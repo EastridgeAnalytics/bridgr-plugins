@@ -26,7 +26,9 @@ Ask these, one at a time. Skip any the person already answered.
 
 1. "Do you have the Bridgr licence email? The subject is *Your Bridgr licence key*. Where are its two attachments
    saved?" No email: open [install/buy.md](install/buy.md) and stop until it arrives.
-2. "Should I set Bridgr up on this computer to try it, or on a server your team can reach?"
+2. "Should I set Bridgr up on this computer to try it, on a server your team can reach, or on a server in your cloud that I create for you?"
+   A server in your cloud that I create for you: open [install/cloud.md](install/cloud.md) and follow it instead of
+   the rest of this page. Your assistant stays on this computer and runs Bridgr's commands over SSH.
    This computer is a trial: only this computer can open it, and nothing is lost when it moves to a server later.
    A server: confirm the address now, so the DNS can be on its way during the download (step 3 shows where it is):
    "Your team will open Bridgr at https://bridgr.yourcompany.com. Is that right?"
@@ -43,7 +45,10 @@ They type it on Bridgr's screen later, never here.
 
 1. **Docker.** Run `docker info --format '{{.ServerVersion}}'`. A version number: go on. "Cannot connect": Docker is
    installed but not running; start it as below and wait. Not installed: install it.
-   - Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`.
+   - Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`. Ubuntu 24.04
+     also needs Bridgr's sandbox allowed, or Bridgr maps data but can't answer:
+     `echo kernel.apparmor_restrict_unprivileged_userns=0 | sudo tee /etc/sysctl.d/60-bridgr-sandbox.conf && sudo sysctl -p /etc/sysctl.d/60-bridgr-sandbox.conf`.
+     Apply only that file, never `sysctl --system`, which can cut Docker's network.
    - Windows: say "Installing Docker, the free app Bridgr runs in. Windows will ask you to allow it." Then:
 
          curl -L -o "Docker Desktop Installer.exe" "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
