@@ -73,7 +73,8 @@ changes: allow the new one and remove the old one.
 
 ## C. Test it
 
-On Bridgr's server, before adding the system in Bridgr:
+On Bridgr's server itself (over SSH), before adding the system in Bridgr. From the laptop the test can fail even
+when Bridgr's path is open, because the rule in B allows only the server's address:
 
 ```bash
 nc -vz -w 5 <the system's IP or host> <port>       # "succeeded" or "open": the network path works
