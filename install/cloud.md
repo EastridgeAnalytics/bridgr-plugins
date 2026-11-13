@@ -5,7 +5,8 @@ through SSH. Open web pages on the laptop, not the server. Keep [install.md](../
 
 ## Before you create anything
 
-Ask: "Which cloud do you already use: AWS, Google Cloud, DigitalOcean or Hetzner? May I use its command-line app
+Ask: "Which cloud do you already use: AWS, Microsoft Azure, Google Cloud, DigitalOcean or Hetzner? May I use its
+command-line app
 to create one small server for Bridgr? Your team will open it at https://bridgr.yourcompany.com. Is that right?"
 Confirm the account or project and the region too. Don't create another account for them.
 
@@ -15,6 +16,8 @@ that fits. An existing sign-in in the right account is fine.
 
 ```bash
 aws sso login
+# Microsoft Azure
+az login
 # Google Cloud
 gcloud auth login
 # DigitalOcean
@@ -26,15 +29,21 @@ hcloud context create bridgr
 For AWS, an SSO profile must already be set up. If not, the person runs `aws configure sso` first. Use their chosen
 profile for every AWS command (`export AWS_PROFILE='<their profile name>'`). DigitalOcean and Hetzner ask the person
 for a token in their terminal, never here.
-Don't use a service account key as a replacement for the person's sign-in.
+For Azure, the app is the Azure CLI, `az`, not `azd` or Azure PowerShell. If the person has more than one
+subscription, run `az account set --subscription '<their subscription>'` with the one they name.
+Don't use a service account key or service principal as a replacement for the person's sign-in.
 
 Use Ubuntu 24.04, 2 vCPU, 4 GB memory and at least 25 GB of disk. AWS and Google Cloud let you choose 25 GB.
+Azure's Ubuntu image starts at 30 GB.
 DigitalOcean includes 80 GB and Hetzner includes 40 GB with these sizes. You cannot shrink those bundled disks to
 25 GB. Google's e2-medium has two shared vCPUs, not two full-time cores.
 
 **Read the current monthly price before creating the server.** Use the provider's price page or calculator for the
 chosen region. Count the disk and public IPv4 too. AWS t3.medium in us-east-1 is about $30.37 a month for the server
-alone at 730 hours. DigitalOcean's regular s-2vcpu-4gb is $24 a month with its disk. For Google Cloud, quote the
+alone at 730 hours. Azure Standard_D2als_v6 in eastus is about $58.69 a month for the
+server, plus about $2.40 for a 30 GB standard SSD and $3.65 for a public IPv4. Azure's cheaper B-series sizes often
+have no quota on a new subscription. DigitalOcean's regular s-2vcpu-4gb is
+$24 a month with its disk. For Google Cloud, quote the
 calculator's e2-medium, 25 GB standard disk and one public IPv4. For Hetzner, read the selected location's monthly
 price below and add the primary IPv4 charge. Prices, tax and traffic charges can change. Don't call an estimate a
 fixed bill. The Bridgr subscription and AI use are separate.
@@ -43,6 +52,7 @@ Say: "This server will cost about <amount and currency> a month, including its d
 and extra traffic. Bridgr and AI use are separate. Shall I create it?" Wait for a yes. No yes: stop.
 
 The price pages are [AWS](https://aws.amazon.com/ec2/pricing/on-demand/),
+[Azure](https://azure.microsoft.com/pricing/calculator/),
 [Google Cloud](https://cloud.google.com/products/calculator),
 [DigitalOcean](https://www.digitalocean.com/pricing/droplets) and
 [Hetzner](https://www.hetzner.com/cloud/cost-optimized/).
@@ -102,6 +112,41 @@ IP=$(aws ec2 describe-instances --instance-ids "$INSTANCE" \
 printf '%s\n' "$IP"
 SERVER="ubuntu@$IP"
 ```
+
+## Microsoft Azure
+
+Use the person's subscription. These commands use eastus and make everything in one new resource group, `bridgr`,
+so it all stays together and can be removed together. If the person's cloud team already made a group for Bridgr,
+use that name instead. Don't use or change a group that holds anything else. Azure makes the network, address and
+disk itself.
+
+```bash
+export AZURE_CORE_ONLY_SHOW_ERRORS=true
+LOCATION=eastus
+RG=bridgr
+az account show --query '{subscription:name, id:id}' --output table
+az group create --name "$RG" --location "$LOCATION" --output none
+az network nsg create --resource-group "$RG" --name bridgr --output none
+az network nsg rule create --resource-group "$RG" --nsg-name bridgr --name bridgr-web --priority 100 \
+  --direction Inbound --access Allow --protocol Tcp --source-address-prefixes '*' \
+  --destination-port-ranges 22 80 443 --output none
+az vm create --resource-group "$RG" --name bridgr --image Ubuntu2404 --size Standard_D2als_v6 \
+  --admin-username bridgr --ssh-key-values "$KEY.pub" --authentication-type ssh \
+  --nsg bridgr --public-ip-sku Standard --storage-sku StandardSSD_LRS --os-disk-size-gb 30 --output none
+IP=$(az vm show --resource-group "$RG" --name bridgr --show-details --query publicIps --output tsv)
+printf '%s\n' "$IP"
+SERVER="bridgr@$IP"
+```
+
+Check that `az account show` names the subscription the person chose before creating anything. If
+`Microsoft.Compute` or `Microsoft.Network` isn't registered, `az vm create` says so: ask the person to run
+`az provider register --namespace Microsoft.Compute` and the same for `Microsoft.Network`, then carry on.
+`Standard_D2als_v6` is 2 vCPU and 4 GB. If `az vm create` says `QuotaExceeded` or `SkuNotAvailable`, nothing was
+created. Read which sizes have quota: `az vm list-usage --location "$LOCATION" --output table`. Pick another
+2 vCPU, 4 GB size from a family with a limit of 2 or more, such as `Standard_D2ls_v6` or `Standard_D2als_v7`, and
+say the price again before creating it. Zero quota everywhere: the person asks for more under Quotas in the Azure
+portal, and you wait. The server has no managed identity, so it can't change anything else in Azure. To restrict
+SSH to the laptop's public IP, change the rule's source for port 22 only and leave 80 and 443 open to everyone.
 
 ## Google Cloud
 
@@ -317,7 +362,7 @@ until this laptop's `bridgr_status` tool succeeds. A successful status command o
 - Back up the `bridgr-data` Docker volume. It holds Bridgr's state. Also keep `files/` for uploaded source files,
   and a private copy of the two attachments. A backup on this same server is not enough. Keep an encrypted copy
   elsewhere and check that it restores before deleting a server. Don't run `docker compose down -v`.
-- The public IP on AWS or Google Cloud can change after stopping and starting. Read it again and update this
+- The public IP on AWS, Azure or Google Cloud can change after stopping and starting. Read it again and update this
   name's A record before checking the address again. For a permanent server, ask the cloud team about reserving
   the address and its cost.
 - Stopping a server is not the same as deleting it. Disk and address charges can remain. DigitalOcean and Hetzner
@@ -331,6 +376,9 @@ until this laptop's `bridgr_status` tool succeeds. A successful status command o
   aws ec2 wait instance-terminated --instance-ids "$INSTANCE"
   aws ec2 delete-security-group --group-id "$SG"
   aws ec2 delete-key-pair --key-name bridgr
+  # Microsoft Azure: removes the whole group, only if it holds nothing but this installation
+  az resource list --resource-group "$RG" --query '[].name' --output tsv
+  az group delete --name "$RG" --yes
   # Google Cloud
   gcloud compute instances delete bridgr --project="$PROJECT" --zone="$ZONE" --quiet
   gcloud compute firewall-rules delete bridgr-web --project="$PROJECT" --quiet
@@ -352,13 +400,18 @@ until this laptop's `bridgr_status` tool succeeds. A successful status command o
 
 ## Command references
 
-Checked against the providers' official references on 12 November 2026. Recheck prices and availability when you
+Checked against the providers' official references on 12 November 2026, Azure on 13 November 2026. Recheck prices
+and availability when you
 install. These are references, not extra steps to run.
 
 - AWS: [Ubuntu images](https://ubuntu.com/aws/docs/aws-how-to/instances/find-ubuntu-images/),
   [instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html),
   [SSH keys](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html),
   [firewall](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html).
+- Azure: [install the CLI](https://learn.microsoft.com/cli/azure/install-azure-cli),
+  [virtual machines](https://learn.microsoft.com/cli/azure/vm#az-vm-create),
+  [firewall](https://learn.microsoft.com/cli/azure/network/nsg/rule#az-network-nsg-rule-create),
+  [resource groups](https://learn.microsoft.com/cli/azure/group#az-group-delete).
 - Google Cloud: [instances](https://docs.cloud.google.com/sdk/gcloud/reference/compute/instances/create),
   [firewall](https://docs.cloud.google.com/sdk/gcloud/reference/compute/firewall-rules/create),
   [SSH access](https://docs.cloud.google.com/compute/docs/instances/access-overview).
