@@ -345,6 +345,10 @@ it themselves. Do not try `xdg-open` on the server or forward a localhost trial 
 The owner accepts the terms, types their AI key and adds data on Bridgr's screen. Follow install.md's handoff, not
 an unattended attempt to accept terms or supply a made-up key.
 
+A cloud server reaches anything on the public internet, and nothing private. If a system the owner wants to connect
+is in a private network, another cloud or the office, read [connect-across-networks.md](connect-across-networks.md)
+before opening anything.
+
 ## Connect the assistant on this laptop
 
 After the owner finishes, use the connect line from the [README](../README.md), with the agreed address:

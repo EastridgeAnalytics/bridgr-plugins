@@ -143,6 +143,8 @@ don't wait for them: `next` is `done` once they finish, without you.
   own assistant, they paste the connect line from the [README](README.md).
 - **More data later:** Settings, Folders, Add data. Or files in the `files` folder, then
   `docker compose run --rm bridgr data add` (no path: it reads that folder).
+- **Data in another network** (a database in a private VPC, another cloud or the office, or "nothing answered at that
+  host and port"): [install/connect-across-networks.md](install/connect-across-networks.md).
 - **A web address later:** [install/address.md](install/address.md), D.
 - **A mailbox** is optional: Settings, Mailbox, whenever the company wants Bridgr to send email.
 - **Update:** change the version on the `image:` line, then `docker compose pull && docker compose up -d`. Data stays.

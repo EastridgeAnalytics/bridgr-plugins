@@ -27,5 +27,6 @@ in `docker compose logs bridgr`.
 | `data add /files` says "not a full path: start it at the drive" | Windows' Git Bash changed `/files` into a Windows path. Run `data add` with no path; it means `/files`. |
 | The data window says "This Bridgr can't see any folders on the computer" | The drive line isn't in `compose.yaml` (install.md, step 4). Add it and start again with the same command as step 6, or upload a file instead. |
 | A question says "No data yet" | Add data first: Settings, Folders, or `data add /files` ([terminal.md](terminal.md)). |
+| Connecting a system says "nothing answered at that host and port" | Bridgr's server can't reach it over the network: it's private, in another cloud, or a firewall blocks it. Read [connect-across-networks.md](connect-across-networks.md). Don't change the password. |
 
 Still stuck? Reply to the licence email.
