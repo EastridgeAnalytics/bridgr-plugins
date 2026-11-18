@@ -18,6 +18,21 @@ Codex, ChatGPT, Cursor or any assistant that takes an MCP server. Add "at https:
 
 That's it. The pages do the rest.
 
+## Buy
+
+https://buy.stripe.com/dRm5kD92H9DQ4Z9dun7ss05
+
+$999 a month, cancel any time. The owner pays there themselves, by card, and enters the company's name. Have a
+promotion code? Enter it on that page. Within a minute the licence email, **Your Bridgr licence key**, arrives with
+the two files the install needs. What to have ready, and where Bridgr runs best: [install/buy.md](install/buy.md).
+
+## Try it somewhere separate first
+
+Bridgr runs in Docker and only reads. If your security team wants to look before it goes near a work machine, start
+with a sandbox: a fresh VM (any cloud, Ubuntu LTS) or a spare computer with Docker. Tell your assistant so: "Install
+Bridgr for my company on this test VM." Nothing is lost when it moves to a real server later: the same licence and
+files work there. What the container can reach, and what it keeps: [Safety](#safety).
+
 ## What's here
 
 | | |
@@ -32,5 +47,8 @@ That's it. The pages do the rest.
 - The assistant never sees a password, key or token. You sign in on your Bridgr's own page and click Approve yourself.
 - Bridgr lets you in only if you're on your company's list, and checks again on every call.
 - Bridgr only reads. It never changes your company's systems.
+- Bridgr runs as one Docker container with its own sandbox for the AI's work (`bridgr-security.json`). It can see the machine's drive read-only, or
+  only the `files` folder beside `compose.yaml` if you say so at install, and you choose on its screen what goes on
+  the map. It keeps its own data in a Docker volume on that machine.
 
 Questions: https://www.bridgr-platform.com/contact
