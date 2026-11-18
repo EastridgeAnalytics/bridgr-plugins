@@ -26,12 +26,11 @@ $999 a month, cancel any time. The owner pays there themselves, by card, and ent
 promotion code? Enter it on that page. Within a minute the licence email, **Your Bridgr licence key**, arrives with
 the two files the install needs. What to have ready, and where Bridgr runs best: [install/buy.md](install/buy.md).
 
-## Try it somewhere separate first
+## Try it first
 
-Bridgr runs in Docker and only reads. If your security team wants to look before it goes near a work machine, start
-with a sandbox: a fresh VM (any cloud, Ubuntu LTS) or a spare computer with Docker. Tell your assistant so: "Install
-Bridgr for my company on this test VM." Nothing is lost when it moves to a real server later: the same licence and
-files work there. What the container can reach, and what it keeps: [Safety](#safety).
+Want to test first? Use a fresh VM, a spare computer with Docker, or your own computer if that's easier. Tell your
+assistant: "Install Bridgr on this machine." The same licence works when you move to a real server. See
+[Safety](#safety).
 
 ## What's here
 
