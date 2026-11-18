@@ -1,6 +1,6 @@
 ---
 name: bridgr
-description: Use when the person asks to connect, install or set up Bridgr, or asks about their company's data through Bridgr - how a number came out, what Bridgr found, which systems are connected or still waiting, or a question Bridgr should answer from the company's own systems. Covers bridgr_status, bridgr_what_is_needed, bridgr_findings, bridgr_ask and bridgr_answer.
+description: Use when the person asks to connect, install or set up Bridgr, or asks about their company's data through Bridgr - how a number came out, what Bridgr found, which systems are connected or still waiting, or a question Bridgr should answer from the company's own systems. Covers bridgr_status, bridgr_what_is_needed, bridgr_findings, bridgr_ask and bridgr_answer, and connecting an Amazon S3 bucket with bridgr_s3_start and bridgr_s3_finish.
 ---
 
 # Bridgr
@@ -29,6 +29,7 @@ connection.
 | What Bridgr still needs before it can read a system | `bridgr_what_is_needed` |
 | What Bridgr noticed and emailed them about | `bridgr_findings` |
 | A number, a list or an explanation from the company's data | `bridgr_ask`, then `bridgr_answer` with the ask id |
+| To connect an Amazon S3 bucket (the owner only) | `bridgr_s3_start`, then `bridgr_s3_finish`: read [install/s3.md](https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/s3-setup/install/s3.md) first. A failure's `Fix:` link is the section to follow |
 
 ## Asking
 
@@ -41,5 +42,6 @@ connection.
 ## Never
 
 - A password, key or token in a tool call or a question. Bridgr strips them and refuses a question that is only a
-  password. Passwords go in on Bridgr's screen, under Connections; `bridgr_what_is_needed` says where.
+  password. Passwords go in on Bridgr's screen, under Connections; `bridgr_what_is_needed` says where. An S3 bucket
+  needs no AWS key at all: never ask for one.
 - A promise that Bridgr can change data. It only reads.

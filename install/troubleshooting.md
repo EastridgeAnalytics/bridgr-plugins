@@ -27,5 +27,6 @@ in `docker compose logs bridgr`.
 | `data add /files` says "not a full path: start it at the drive" | Windows' Git Bash changed `/files` into a Windows path. Run `data add` with no path; it means `/files`. |
 | The data window says "This Bridgr can't see any folders on the computer" | The drive line isn't in `compose.yaml` (install.md, step 4). Add it and start again with the same command as step 6, or upload a file instead. |
 | A question says "No data yet" | Add data first: Settings, Folders, or `data add /files` ([terminal.md](terminal.md)). |
+| An S3 connection failed, or a message ends with `Fix: …/install/s3.md#…` | Follow that section of [s3.md](s3.md), then try the same step again. |
 
 Still stuck? Reply to the licence email.
