@@ -57,7 +57,7 @@ They type it on Bridgr's screen later, never here.
 
      If the installer says WSL is missing, the owner runs `wsl --install --no-distribution` in PowerShell as
      administrator and restarts the computer; then start again from step 1. A new terminal may be needed before
-     `docker` is found.
+     `docker` is found. Windows Server: install WSL from https://github.com/microsoft/WSL/releases instead.
    - Mac: say "Installing Docker, the free app Bridgr runs in. Your Mac will ask for your password." Use `arm64`
      below on Apple silicon (`uname -m` says `arm64`), `amd64` on Intel:
 
