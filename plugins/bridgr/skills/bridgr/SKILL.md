@@ -15,7 +15,7 @@ Check this first, in one call at most:
 | You see | Do |
 |---|---|
 | No `bridgr_*` tools, or "unknown tool" | Bridgr isn't connected in this session. Just connected: start a new chat or session. Otherwise fetch and follow https://raw.githubusercontent.com/EastridgeAnalytics/bridgr-plugins/main/setup.md from step 2 |
-| The server asks to sign in, 401, "needs authentication" | Sign in again: `/mcp` → bridgr → Authenticate (Claude Code), **Connect** on the plugin or connector (apps), `codex mcp login bridgr` (Codex). The person signs in and clicks Approve in their browser; never ask for a password, key or code |
+| The server asks to sign in, 401, "needs authentication" | Sign in again: `/mcp` on its own → bridgr → **Authenticate** (Claude Code CLI) or **Connect** (Claude Desktop's Code tab, and the plugin or connector in the apps), `codex mcp login bridgr` (Codex). The person signs in and clicks Approve in their browser; never ask for a password, key or code |
 | "You're not on {company}'s Bridgr list" | Pass on the error's own words: it names who to ask. Once added, they sign in again |
 
 Tell the person what you found and the one step to fix it. Never guess at tool names or work around a missing
