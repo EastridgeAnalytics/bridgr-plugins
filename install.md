@@ -17,8 +17,14 @@ Windows runs them in Git Bash.
 - Ask the questions below together, before the first step. After that, stop for the owner only when Docker needs
   them (step 1) or Bridgr says so (`person` is true below).
 - Say only what the owner must do or wait for, in plain words. Don't report each step you did, and don't explain how
-  a command works unless they ask.
+  a command works unless they ask. Never name these pages or their sections to the owner.
   Don't use words like registry, image, compose, port, tag or CNAME unless they asked.
+- A check that finds nothing yet is not a failure, and the checks below are written so they don't fail. When a
+  command really fails, tell the owner why in one plain line ("Docker isn't running yet; starting it"), never only
+  that it failed.
+- If your tool refuses a command (Claude Code's auto mode can refuse step 4's lines), don't look for a way around it.
+  Give the owner that one line to paste (in Claude Code, typed after `!`, it runs here) and say in one sentence what
+  it does. Then go on.
 
 ## Before you start
 
@@ -36,15 +42,16 @@ Ask these, one at a time. Skip any the person already answered.
    map. Say now if you'd rather it didn't." No answer, or fine: step 4's drive line. No: Bridgr sees only the `files`
    folder beside `compose.yaml`.
 
-Don't ask about the AI key. Check for Claude Code's sign-in yourself: `ls ~/.claude/.credentials.json`. Found (Linux
-and Windows): Bridgr uses it, through step 4's sign-in line. Not found, or a Mac (its sign-in is in the keychain):
-ask "Bridgr needs an Anthropic API key to answer questions. Do you have one, or should I tell you how to get one?"
-They type it on Bridgr's screen later, never here.
+Don't ask about the AI key. Check for Claude Code's sign-in yourself:
+`ls ~/.claude/.credentials.json 2>/dev/null || echo none`. Found (Linux and Windows): Bridgr uses it, through step
+4's sign-in line. `none`, or a Mac (its sign-in is in the keychain): ask "Bridgr needs an Anthropic API key to
+answer questions. Do you have one, or should I tell you how to get one?" They type it on Bridgr's screen later,
+never here.
 
 ## Six steps
 
-1. **Docker.** Run `docker info --format '{{.ServerVersion}}'`. A version number: go on. "Cannot connect": Docker is
-   installed but not running; start it as below and wait. Not installed: install it.
+1. **Docker.** Run `docker info --format '{{.ServerVersion}}' 2>&1 || true`. A version number: go on. "Cannot
+   connect": Docker is installed but not running; start it as below and wait. "command not found": install it.
    - Linux server: `curl -fsSL https://get.docker.com | sh`, then `sudo systemctl enable --now docker`. Ubuntu 24.04
      also needs Bridgr's sandbox allowed, or Bridgr maps data but can't answer:
      `echo kernel.apparmor_restrict_unprivileged_userns=0 | sudo tee /etc/sysctl.d/60-bridgr-sandbox.conf && sudo sysctl -p /etc/sysctl.d/60-bridgr-sandbox.conf`.
@@ -65,13 +72,13 @@ They type it on Bridgr's screen later, never here.
          sudo hdiutil attach Docker.dmg && sudo /Volumes/Docker/Docker.app/Contents/MacOS/install --accept-license --user=$USER && sudo hdiutil detach /Volumes/Docker
          open -a Docker
 
-   - Then wait until `docker info --format '{{.ServerVersion}}'` prints a version, up to two minutes.
+   - Then run the same check until it prints a version, up to two minutes.
    - `--accept-license` accepts Docker's own terms for the owner: Docker Desktop is free for a company under 250
      people and $10M a year; a bigger one needs Docker's paid plan.
    - They can't install software here: stop. Eastridge can host Bridgr instead; they reply to the licence email.
 
-   Then run `docker compose version`. It must print `Docker Compose version v2` or later. If it fails, or the
-   only one there is the old `docker-compose`, install the Compose plugin: on a Linux server,
+   Then run `docker compose version 2>&1 || true`. It must print `Docker Compose version v2` or later. If it
+   doesn't, or the only one there is the old `docker-compose`, install the Compose plugin: on a Linux server,
    `sudo apt-get install -y docker-compose-plugin` (or run the get.docker.com line above, which includes it). Docker
    Desktop already has it. An old Compose crashes Bridgr when it restarts.
 2. **Files.** The two attachments, `compose.yaml` and `bridgr-security.json`, go together in one folder: the one the
@@ -111,17 +118,18 @@ They type it on Bridgr's screen later, never here.
 
 Run this and read the JSON. Check the rows in this order; the first that fits is the one.
 
-    docker compose run --rm bridgr status --json
+    docker compose run --rm bridgr status --json; echo "exit $?"
 
 | If | Do |
 |---|---|
-| `next` is `terms`, `key`, `data` or `done` | Your part is over. Open `open_url` in the owner's browser if it is set (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows), else Bridgr's address. Say `say_to_person`, then the link on its own line. Stop. |
+| `next` is `terms`, `key`, `data` or `done` | Your part is over. Open `open_url` in the owner's browser if it is set (`open '<url>'` on a Mac, `xdg-open '<url>'` on Linux, `powershell -c "Start-Process '<url>'"` on Windows), else Bridgr's address. Say `say_to_person`. Give the link on its own line only if it didn't open (no browser here, or the command failed): a one-time link that opened is used up, so never send the owner back to it. Stop. |
 | `person` is true | The address on a server, or a licence problem: say `say_to_person` word for word and wait for them to say it's done. Then run `run` if it's set, and run status again. |
 | `wait_seconds` is above 0 | Bridgr is working by itself. Wait that long, then run status again. |
 | `run` is set | Run exactly that command. Then run status again. |
 
-Exit code 2 means more to do and is normal. Exit code 1 is an error:
-[install/troubleshooting.md](install/troubleshooting.md). A trial's first answer looks like this (cut short):
+The last line is the exit code, so a normal answer never shows as a failed command. `exit 2` means more to do and is
+normal. `exit 1` is an error: [install/troubleshooting.md](install/troubleshooting.md). A trial's first answer looks
+like this (cut short):
 
     {"next": "terms", "person": true, "open_url": "http://localhost:8080/", "run": "",
      "say_to_person": "Bridgr is ready. Open this link to accept the licence terms and give Bridgr your data. ...",
@@ -135,6 +143,10 @@ one-time sign-in link: it works once, for 24 hours, and asking status again give
 a trial it's Bridgr's own address, which signs the owner in on this computer. Everything after that is on Bridgr's
 screen and the owner's to do: the licence terms, the AI key only without Claude Code's sign-in, and the data. You
 don't wait for them: `next` is `done` once they finish, without you.
+
+Until `next` is `done`, don't offer to connect this assistant to Bridgr. If the owner asks about their data before
+then, say Bridgr answers on its own screen once their data is in, and give Bridgr's address. Connecting an assistant
+comes after, with the connect line in the [README](README.md).
 
 ## After it's set up
 

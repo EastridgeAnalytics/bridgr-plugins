@@ -321,21 +321,21 @@ Use the same loop as [install.md](../install.md), **Then follow Bridgr**. Each c
 `bridgr`. Only web pages open on the laptop.
 
 ```bash
-ssh -i "$KEY" "$SERVER" 'cd bridgr && sudo docker compose run --rm bridgr status --json'
+ssh -i "$KEY" "$SERVER" 'cd bridgr && sudo docker compose run --rm bridgr status --json; echo "exit $?"'
 ```
 
 | If | Do |
 |---|---|
-| `next` is `terms`, `key`, `data` or `done` | Open `open_url` in the person's laptop browser if set, else the Bridgr address. Say `say_to_person`, then hand the owner their link privately. Stop for the owner. |
+| `next` is `terms`, `key`, `data` or `done` | Open `open_url` in the person's laptop browser if set, else the Bridgr address. Say `say_to_person`. Hand the owner their link privately only if it didn't open: a one-time link that opened is used up. Stop for the owner. |
 | `person` is true | Say `say_to_person` word for word and wait for them to say it is done. Run `run` if set, over SSH in `bridgr`, then status again. |
 | `wait_seconds` is above 0 | Wait that long, then status again over SSH. |
 | `run` is set | Run that command over SSH in `bridgr`, then status again. |
 
 For `run`, keep the returned command unchanged apart from `sudo docker` instead of `docker` for this Ubuntu user.
-Never run it on the laptop. Exit code 2 means more to do and is normal. Exit code 1 is an error: read
-[troubleshooting.md](troubleshooting.md), running its checks over SSH too. Don't print status JSON containing an
-owner link into a shared log. Open the link privately. Save status JSON only in a file only the person can read
-(`umask 077`). Never paste cloud keys, licence keys or sign-in links into a report.
+Never run it on the laptop. The last line is the exit code: `exit 2` means more to do and is normal. `exit 1` is an
+error: read [troubleshooting.md](troubleshooting.md), running its checks over SSH too. Don't print status JSON
+containing an owner link into a shared log. Open the link privately. Save status JSON only in a file only the person
+can read (`umask 077`). Never paste cloud keys, licence keys or sign-in links into a report.
 
 The owner link works once, in one browser. To sign the owner in on another browser or computer, run
 `ssh -i "$KEY" "$SERVER" 'cd bridgr && sudo docker compose run --rm bridgr signin'` for a fresh link.

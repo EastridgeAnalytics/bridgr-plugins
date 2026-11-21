@@ -47,8 +47,10 @@ second Bridgr.
     claude plugin marketplace add EastridgeAnalytics/bridgr-plugins
     claude plugin install bridgr@bridgr
 
-It asks for the Bridgr address (host only). Then the person runs `/reload-plugins`, then `/mcp` → **bridgr** →
-**Authenticate**. If the plugin can't be installed (not found, or no route to GitHub), add the connector directly:
+It asks for the Bridgr address (host only). Then the person runs `/reload-plugins`, then `/mcp` on its own (not
+`/mcp bridgr`) and picks **bridgr**: in Claude Desktop's Code tab it's the row *Provided by the Bridgr plugin*, not
+one of the other **Connect** rows. They click **Authenticate** (the CLI) or **Connect** (Claude Desktop). If the
+plugin can't be installed (not found, or no route to GitHub), add the connector directly:
 
     claude mcp add --transport http --scope user bridgr <MCP URL>
 
@@ -91,7 +93,8 @@ No Bridgr tools in this session: say exactly what to restart or reload (step 3),
 | They clicked **No** by mistake | Start step 3's connect step again |
 | **Upload plugin**, **Add custom connector** or **Connect** is greyed out, or "Ask an organization owner" | Their company's Claude or ChatGPT admin has to allow it, or (Claude) publish the company's Bridgr plugin to the org |
 | Bridgr tools don't appear after connecting | Start a new chat or session; CLI: restart it. Check Bridgr is on in the tools menu. Then step 2 |
-| 401, "needs authentication" or "invalid token" later | Sign in again: `/mcp` → bridgr → Authenticate (Claude Code), **Connect** on the plugin or connector (apps), `codex mcp login bridgr` (Codex) |
+| 401, "needs authentication" or "invalid token" later | Sign in again: `/mcp` on its own → bridgr → **Authenticate** (Claude Code CLI) or **Connect** (Claude Desktop's Code tab, and the plugin or connector in the apps), `codex mcp login bridgr` (Codex) |
+| "Couldn't start sign-in for bridgr", the connector "points at a different server URL" (Claude Desktop) | This session loaded an older copy of the connector. Start a new Code session, then `/mcp` again |
 | `plugin marketplace add` fails | No route to GitHub. Claude Code: the direct `claude mcp add` line in step 3. Codex: skip the plugin lines |
 | A Bridgr connector exists with a different address | Ask which is theirs. Remove the wrong one, then connect again |
 | Anything else | Tell them the exact error, and that https://www.bridgr-platform.com/contact can help |
